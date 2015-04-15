@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <name>pisa_hand_description</name>
+  <version>0.0.0</version>
+  <description>The pisa_hand_description package</description>
+
+  <maintainer email="cjrosales@gmail.com">Carlos Rosales</maintainer>
+  <license>GPLv2</license>
+  
+  <author>Carlos Rosales</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+  </export>
+</package>

@@ -1,0 +1,44 @@
+<launch>
+	<!-- LAUNCH INTERFACE -->
+	<arg name="gui" default="true" />
+	<arg name="robot_name" default="pisa_hand_simple"/>
+	<arg name="use_rviz" default="true"/> 
+	<arg name="use_joint_state_publisher" default="true"/>  <!--FALSE when you use values from data/>-->
+	<!--<arg name="use_mimic_tag" default="false"/> --> <!-- the synergy is applied with pure kinematics -->
+
+	<!-- LAUNCH IMPLEMENTATION -->
+	<!--<param name="robot_description" command="$(find xacro)/xacro.py $(find pisa_hand_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=$(arg use_mimic_tag)" />-->
+
+	<param name="robot_description" command="$(find xacro)/xacro.py $(find pisa_hand_description)/robot/$(arg robot_name).urdf.xacro " />
+
+	<param name="use_gui" value="$(arg gui)"/>
+
+	<group if="$(arg use_joint_state_publisher)">
+		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+	</group>
+
+	<group unless="$(arg use_joint_state_publisher)">
+	        <node name="my_publisher" pkg="pisa_hand_publisher" type="pisa_hand_publisher_node" respawn="false" output="screen"/> 
+  	</group>
+
+
+
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"  /> 
+
+
+
+	<group if="$(arg use_rviz)">
+		<node name="my_rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find pisa_hand_description)/launch/my_rviz.rviz" output="screen"/>
+	</group>
+</launch>
+
+
+	
+
+
+
+
+	<!-- DA ATTIVARE SE SI USA IL MAIN DEL ROBOT PUBLISHER/-->
+
+
+

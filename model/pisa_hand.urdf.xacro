@@ -1,0 +1,469 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+	<!--
+		HAND MODEL v.01
+		Material: ABS 
+		CAD model available at: http://www.naturalmachinemotioninitiative.com/#!softhand/c24r2
+	-->
+
+	<xacro:include filename="$(find pisa_hand_description)/model/materials.urdf.xacro"/>
+	<!-- <xacro:include filename="$(find pisa_hand_description)/model/pisa_hand.transmission.xacro"/> -->
+	<!-- <xacro:include filename="$(find pisa_hand_description)/model/pisa_hand.gazebo.xacro"/> -->
+	<!-- <xacro:include filename="$(find pisa_hand_description)/model/pisa_hand.inertia.xacro"/> -->
+
+	<xacro:property name="pi" value="3.1415926535897931" />
+
+	<!-- joint properties -->
+	<xacro:property name="abd_lb" value="-30" />
+	<xacro:property name="abd_ub" value="30" />
+	<xacro:property name="thumb_abd_lb" value="0" />
+	<xacro:property name="thumb_abd_ub" value="90" />
+	<xacro:property name="inner_lb" value="0" />
+	<xacro:property name="inner_ub" value="90" />
+	<xacro:property name="middle_lb" value="0" />
+	<xacro:property name="middle_ub" value="90" />
+	<xacro:property name="outer_lb" value="0" />
+	<xacro:property name="outer_ub" value="90" />
+	<xacro:property name="velocity" value="100" />
+	<xacro:property name="effort" value="100" />
+	<xacro:property name="damping" value="0.0" />
+	<xacro:property name="friction" value="0.0" />
+
+	<!-- synergy vector -->
+	<xacro:property name="thumb_abd_R" value="1.3" />
+	<xacro:property name="thumb_inner_R" value="1.3" />
+	<xacro:property name="thumb_outer_R" value="1.0" />
+	<xacro:property name="index_abd_R" value="-0.2" />
+	<xacro:property name="index_inner_R" value="1.0" />
+	<xacro:property name="index_middle_R" value="1.0" />
+	<xacro:property name="index_outer_R" value="1.0" />
+	<xacro:property name="middle_abd_R" value="0.0" />
+	<xacro:property name="middle_inner_R" value="1.0" />
+	<xacro:property name="middle_middle_R" value="1.0" />
+	<xacro:property name="middle_outer_R" value="1.0" />
+	<xacro:property name="ring_abd_R" value="0.2" />
+	<xacro:property name="ring_inner_R" value="1.0" />
+	<xacro:property name="ring_middle_R" value="1.0" />
+	<xacro:property name="ring_outer_R" value="1.0" />
+	<xacro:property name="little_abd_R" value="0.4" />
+	<xacro:property name="little_inner_R" value="1.0" />
+	<xacro:property name="little_middle_R" value="1.0" />
+	<xacro:property name="little_outer_R" value="1.0" />
+
+	<!-- synergy joint properties -->
+	<xacro:property name="synergy_lb" value="0.0" />
+	<xacro:property name="synergy_ub" value="1.0" />
+	<xacro:property name="max_synergy_velocity" value="100" />
+	<xacro:property name="max_synergy_effort" value="100" />
+	<xacro:property name="synergy_damping" value="0.0" />
+	<xacro:property name="synergy_friction" value="0.0" />
+
+	<!-- SOFT FINGER model -->
+	<!-- 4 fingers are equal (index, middle, ring, little) -->
+	<xacro:macro name="soft_finger" params="parent parent_name name position orientation abd_R ">
+
+		<!-- KNUCKLE -->
+		<joint name="${name}_abd_joint" type="revolute">
+			<origin xyz="${position}" rpy="${orientation}" />
+			<parent link="${parent}"/>
+			<child link="${name}_knuckle_link"/>
+			<axis xyz="-1 0 0" />
+			<limit lower="${abd_lb *pi/180}" upper="${abd_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+			<dynamics damping="${damping}" friction="${friction}"/>
+			<!-- <xacro:if value="${useMimicTag}">
+				<mimic joint="${parent_name}_synergy_joint" multiplier="${abd_R}"/>
+			</xacro:if> -->
+		</joint>
+		
+		<link name="${name}_knuckle_link">
+			<!-- <inertial>
+				<insert_block name="knuckle_inertia"/>
+			</inertial>
+			<visual>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/knuckle.stl" scale=" .001 .001 .001" />
+				</geometry>
+				<material name="SoftHand/DarkGrey" />
+			</visual>
+			<collision>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/knuckle.stl" scale=" .001 .001 .001" />
+				</geometry>
+			</collision> -->
+		</link>
+
+		<!-- PROXIMAL PHALANGE -->
+		<joint name="${name}_inner_joint" type="revolute">
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<parent link="${name}_knuckle_link"/>
+			<child link="${name}_proximal_link"/>
+			<axis xyz="0  1 0" />
+			<limit lower="${inner_lb *pi/180}" upper="${inner_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+			<dynamics damping="${damping}" friction="${friction}"/>
+		</joint>
+
+
+		<link name="${name}_proximal_link">
+			<!-- <inertial>
+				<insert_block name="phalanx_inertia"/>
+			</inertial> -->
+			<visual>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/dito.stl" scale=" .0012 .0015 .0008" />
+				</geometry>
+				<material name="SoftHand/Blue" />
+			</visual>
+			<!-- <collision>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/phalanx.stl" scale=" .001 .001 .001" />
+				</geometry>
+			</collision> -->
+		</link>
+
+		<!-- MIDDLE PHALANGE -->
+		<joint name="${name}_middle_joint" type="revolute">
+			<origin xyz="0 0 0.03" rpy="0 0 0" />
+			<parent link="${name}_proximal_link"/>
+			<child link="${name}_middle_link"/>
+			<axis xyz="0 1 0" />
+			<limit lower="${middle_lb *pi/180}" upper="${middle_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+			<dynamics damping="${damping}" friction="${friction}"/>
+		</joint>
+
+		
+		<link name="${name}_middle_link">
+			<!--< inertial>
+				<insert_block name="phalanx_inertia"/>
+			</inertial> -->
+			<visual>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/dito.stl" scale=" .0012 .0015 .0008" />
+				</geometry>
+				<material name="SoftHand/Red" />
+			</visual>
+			<!-- <collision>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/phalanx.stl" scale=" .001 .001 .001" />
+				</geometry>
+			</collision> -->
+		</link>
+
+		<!-- DISTAL PHALANGE -->
+		<joint name="${name}_outer_joint" type="revolute">
+			<origin xyz="0.0 0 0.03" rpy="0 0 0" />
+			<parent link="${name}_middle_link"/>
+			<child link="${name}_distal_link"/>
+			<axis xyz="0 1 0" />
+			<limit lower="${outer_lb *pi/180}" upper="${outer_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+			<dynamics damping="${damping}" friction="${friction}"/>
+		</joint>
+
+		<link name="${name}_distal_link">
+			<!-- <inertial>
+				<insert_block name="fingertip_inertia"/>
+			</inertial> -->
+			<visual> 
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/dito.stl" scale=" .0012 .0015 .0008" /> 
+				</geometry>
+				 <material name="SoftHand/Green" /> 
+			</visual>
+			<!-- <collision>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/fingertip.stl" scale=" 0.001 .001 .001" /> 
+					<mesh filename="package://pisa_hand_description/meshes/finger_piece.stl" scale=" .001 .001 .001" />
+				</geometry>
+			</collision> -->
+		</link>
+
+	</xacro:macro>
+
+	<!-- THUMB MODEL -->
+	<!-- It has one joint less than rest of fingers -->
+	<xacro:macro name="soft_thumb" params="parent parent_name name left position orientation abd_R ">
+
+		 <xacro:if value="${left}">
+			<!-- KNUCKLE -->
+			 <joint name="${name}_abd_joint" type="revolute">
+				<origin xyz="${position}" rpy="${orientation}" />
+				<parent link="${parent}"/>
+				<child link="${name}_fake_link"/>
+				<axis xyz="0 0 1" />
+				<limit lower="${thumb_abd_lb *pi/180}" upper="${thumb_abd_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+				<dynamics damping="${damping}" friction="${friction}"/>
+				<!-- <xacro:if value="${useMimicTag}">
+					<mimic joint="${parent_name}_synergy_joint" multiplier="${abd_R}"/>
+				</xacro:if> -->
+			</joint>
+			
+			<link name="${name}_fake_link">
+				<!-- <inertial>
+					<insert_block name="negligible_inertia"/>
+			    </inertial> 
+				 	<visual>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/thumb_knuckle_left.stl" scale=" .001 .001 .001" />
+					</geometry>
+					<material name="SoftHand/DarkGrey" />
+				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/thumb_knuckle_left.stl" scale=" .001 .001 .001" />
+					</geometry>
+				</collision>  -->
+			 </link>
+
+			<joint name="${name}_rot_joint" type="revolute">
+				<origin xyz="${position}" rpy="${orientation}" />
+				<parent link="${name}_fake_link"/>
+				<child link="${name}_knuckle_link"/>
+				<axis xyz="0 1 0" />
+				<limit lower="${thumb_abd_lb *pi/180}" upper="${thumb_abd_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+				<dynamics damping="${damping}" friction="${friction}"/>
+				<!-- <xacro:if value="${useMimicTag}">
+					<mimic joint="${parent_name}_synergy_joint" multiplier="${abd_R}"/>
+				</xacro:if> -->
+			</joint>
+			
+			<link name="${name}_knuckle_link">
+				<!-- <inertial>
+					<insert_block name="thumb_knuckle_inertia"/>
+				</inertial> 
+				<visual>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/dito.stl" scale=" .001 .001 .001" />
+					</geometry>
+					<material name="SoftHand/Blue" />
+				</visual>
+					 <collision>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/thumb_knuckle_left.stl" scale=" .001 .001 .001" />
+					</geometry>
+				</collision> -->
+			</link>
+
+			<!-- PROXIMAL PHALANGE -->
+			<joint name="${name}_inner_joint" type="revolute">
+				<origin xyz="0.022500000 0.003300000 0.0" rpy="-0.426627741408745 0 0.0" />
+				<parent link="${name}_knuckle_link"/>
+				<child link="${name}_proximal_link"/>
+				<axis xyz="0 -1 0" />
+				<limit lower="${inner_lb *pi/180}" upper="${inner_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+				<dynamics damping="${damping}" friction="${friction}"/>
+			</joint>
+		</xacro:if> 
+
+  
+		<!-- THUMB RIGHT HAND -->
+
+
+		<xacro:unless value="${left}">
+			<!-- KNUCKLE -->
+			<joint name="${name}_abd_joint" type="revolute">
+				<origin xyz="${position}" rpy="${orientation}" />
+				<parent link="${parent}"/>
+				<child link="${name}_fake_link"/>
+				<axis xyz="0 1 0" />
+				<limit lower="${thumb_abd_lb *pi/180}" upper="${thumb_abd_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+				<dynamics damping="${damping}" friction="${friction}"/>
+				<!-- <xacro:if value="${useMimicTag}">
+					<mimic joint="${parent_name}_synergy_joint" multiplier="${abd_R}"/>
+				</xacro:if> -->
+			</joint>
+
+			<link name="${name}_fake_link">
+				<!-- <inertial>
+					<insert_block name="negligible_inertia"/>
+				</inertial> -->
+				<!-- <visual>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/thumb_knuckle_left.stl" scale=" .001 .001 .001" />
+					</geometry>
+					<material name="SoftHand/DarkGrey" />
+				</visual>
+				<collision>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/thumb_knuckle_left.stl" scale=" .001 .001 .001" />
+					</geometry>
+				</collision> --> 
+			</link>
+
+			<joint name="${name}_rot_joint" type="revolute">
+				<!-- <origin xyz="${position}" rpy="${orientation}" /> -->
+				<origin xyz="0 0 0" rpy="0 1.2 0" /> 
+				<parent link="${name}_fake_link"/>
+				<child link="${name}_knuckle_link"/>
+				<axis xyz="1 0 0" />
+				<limit lower="${thumb_abd_lb *pi/180}" upper="${thumb_abd_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+				<dynamics damping="${damping}" friction="${friction}"/>
+				<!-- <xacro:if value="${useMimicTag}">
+					<mimic joint="${parent_name}_synergy_joint" multiplier="${abd_R}"/>
+				</xacro:if> -->
+			</joint>
+			
+			<link name="${name}_knuckle_link">
+				<!-- <inertial>
+					<insert_block name="thumb_knuckle_inertia"/>
+				</inertial> -->
+				<visual>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/dito.stl" scale=" .0014 .0015 .0008" />
+					</geometry>
+					<material name="SoftHand/Blue" />
+				</visual>
+				<!-- <collision>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/thumb_knuckle_right.stl" scale=" .001 .001 .001" />
+					</geometry>
+				</collision> -->
+			</link>
+
+			<!-- PROXIMAL PHALANGE  xyz="0.022726230 0.00811475 0.0"-->
+			    <joint name="${name}_inner_joint" type="revolute">
+	           	<origin xyz="0.0 0.0 0.03" rpy="0.0 0.0 0.0" />  
+	   
+				<parent link="${name}_knuckle_link"/>
+				<child link="${name}_proximal_link"/>
+				<axis xyz=" 1 0 0" />
+				<limit lower="${inner_lb *pi/180}" upper="${inner_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+				<dynamics damping="${damping}" friction="${friction}"/>
+			</joint>
+		</xacro:unless>
+
+		<link name="${name}_proximal_link">
+			<!-- <inertial>
+				<insert_block name="phalanx_inertia"/>
+			</inertial> -->
+			<visual>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/dito.stl" scale=" .0012 .0015 .0007" />
+				</geometry>
+				<material name="SoftHand/Red" />
+			</visual>
+			<!-- <collision>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/phalanx.stl" scale=" .001 .001 .001" />
+				</geometry>
+			</collision> -->
+		</link>
+
+		<!-- DISTAL PHALANGE -->
+		<joint name="${name}_outer_joint" type="revolute">
+			<origin xyz="0.0 0 0.025" rpy="0 0 0" />
+			<parent link="${name}_proximal_link"/>
+			<child link="${name}_distal_link"/>
+			<axis xyz=" 1 0 0" />
+			<limit lower="${outer_lb *pi/180}" upper="${outer_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
+			<!--<dynamics damping="${damping}" friction="${friction}"/> -->
+		</joint>
+
+		<link name="${name}_distal_link">
+			<!-- <inertial>
+				<insert_block name="fingertip_inertia"/>
+			</inertial> -->
+			<visual>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/dito.stl" scale=" .0012 .0015 .0007" />
+				</geometry>
+				<material name="SoftHand/Green" />
+			</visual>
+			<!-- <collision>
+				<geometry>
+					<mesh filename="package://pisa_hand_description/meshes/fingertip.stl" scale=" .001 .001 .001" />
+				</geometry>
+			</collision>  -->
+		</link>
+	</xacro:macro>
+
+	<!-- SOFT HAND MODEL -->
+	<xacro:macro name="pisa_hand" params="parent name left *origin">
+
+		<!-- MOTOR JOINT -->
+	<!--	<joint name="${name}_synergy_joint" type="revolute" >
+			<parent link="${parent}" />
+			<child link="${name}_invisible_wire_link"/>
+			<axis xyz="0 0 1" />
+			<limit lower="${synergy_lb}" upper="${synergy_ub}" effort="${max_synergy_effort}" velocity="${max_synergy_velocity}"/>
+			<dynamics damping="${synergy_damping}" friction="${synergy_friction}"/>
+		</joint>
+		<link name="${name}_invisible_wire_link">
+			<inertial>
+				<insert_block name="negligible_inertia"/>
+			</inertial>
+		</link>  -->
+
+		<!-- PALM -->
+		<joint name="${name}_palm_joint" type="fixed" >
+			<origin xyz="-0.01 0 0.06" rpy="0 0 0" />
+			<insert_block name="origin"/>
+			<parent link="${parent}" />
+			<child link="${name}_palm_link" />
+		</joint>
+
+		<link name="${name}_palm_link">
+			<!-- <inertial>
+				<insert_block name="palm_inertia"/>
+			</inertial> -->
+			<xacro:if value="${left}">
+				<visual>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/palm_left.stl" scale=" .001 .001 .001" />
+					</geometry>
+					<material name="SoftHand/DarkGrey" />
+				</visual>
+				<!-- <collision>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/palm_left.stl" scale=" .001 .001 .001" />
+					</geometry>
+				</collision> -->
+			</xacro:if>
+			<xacro:unless value="${left}">
+				<visual>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/palmo.stl" scale=" .0015 .002 .0019" />
+					</geometry>
+					<material name="SoftHand/DarkGrey" />
+				</visual>
+				<!-- <collision>
+					<geometry>
+						<mesh filename="package://pisa_hand_description/meshes/palm_right.stl" scale=" .001 .001 .001" />
+					</geometry>
+				</collision> -->
+			</xacro:unless>
+		</link>
+
+		<!-- THUMB AND FINGERS -->
+		<!-- change anchor points accordingly to the leftness -->
+		<xacro:if value="${left}"> 
+			<xacro:soft_thumb parent="${name}_palm_link" parent_name="${name}" name="${name}_thumb" left="${left}" position="0.005669722 -0.032876873 0.018373996" orientation="0.0 -0.43633198577877463 -1.570796326794897"  abd_R="${thumb_abd_R *(thumb_abd_ub - thumb_abd_lb)*pi/180}" />
+
+			<xacro:soft_finger parent="${name}_palm_link" parent_name="${name}" name="${name}_index" position="-0.003349856 -0.019500000 0.058891802" orientation="-1.5707963267948957 -1.2217307407768807 -1.570796326794897" abd_R="${index_abd_R}" />
+
+			<xacro:soft_finger parent="${name}_palm_link" parent_name="${name}" name="${name}_middle" position="-0.003349856 0.0 0.072391802" orientation="-3.141592653589793 -1.5707963267948966 0.0" abd_R="${middle_abd_R}"  />
+
+			<xacro:soft_finger parent="${name}_palm_link" parent_name="${name}" name="${name}_ring" position="-0.003349856 0.019500000 0.058891802" orientation="1.5707963267948952 -1.3962636194521678 1.5707963267948966"  abd_R="${ring_abd_R}"  />
+
+			<xacro:soft_finger parent="${name}_palm_link" parent_name="${name}" name="${name}_little" position="-0.00349856 0.039000000 0.045391802" orientation="1.5707963267948957 -1.2217307407768807 1.570796326794897"  abd_R="${little_abd_R}"  />
+		</xacro:if>
+		
+		<xacro:unless value="${left}">
+			<!-- <xacro:soft_thumb parent="${name}_palm_link" parent_name="${name}" name="${name}_thumb" left="${left}" position="0.005669722 0.032876873 0.018373996" orientation="0.08389097788000696 -0.4287012609015684 1.3712034099005517" useMimicTag="${useMimicTag}" abd_R="${thumb_abd_R *(thumb_abd_ub - thumb_abd_lb)*pi/180}"  /> -->
+
+			<xacro:soft_thumb parent="${name}_palm_link" parent_name="${name}" name="${name}_thumb" left="${left}" position="0.007 0.045 -0.045" orientation="0 -1.16 1.57" abd_R="${thumb_abd_R *(thumb_abd_ub - thumb_abd_lb)*pi/180}"  />
+
+			<xacro:soft_finger parent="${name}_palm_link" parent_name="${name}" name="${name}_index" position="0.008 0.033 0.054" orientation="0 0 0"  abd_R="${index_abd_R}"  />
+
+			<xacro:soft_finger parent="${name}_palm_link" parent_name="${name}" name="${name}_middle" position="0.008 0.010 0.062" orientation="0 0 0.0" abd_R="${middle_abd_R}"  />
+
+			<xacro:soft_finger parent="${name}_palm_link" parent_name="${name}" name="${name}_ring" position="0.008 -0.014 0.060" orientation="0 0 0" abd_R="${ring_abd_R}" />
+
+			<xacro:soft_finger parent="${name}_palm_link" parent_name="${name}" name="${name}_little" position=" 0.008 -0.034 0.051" orientation="0 0 0" abd_R="${little_abd_R}" />
+		</xacro:unless>
+
+		<!-- <xacro:pisa_hand_transmission name="${name}" withAdaptiveTransmission="${withAdaptiveTransmission}"/>
+		<xacro:pisa_hand_gazebo name="${name}" withAdaptiveTransmission="${withAdaptiveTransmission}" useMimicTag="${useMimicTag}"/> -->
+		
+	</xacro:macro>
+
+</robot>
