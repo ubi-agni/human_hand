@@ -32,6 +32,10 @@
 	<material name="SoftHand/Black">
 		<color rgba="0.0 0.0 0.0 1.0"/>
 	</material>
+  
+  <material name="HumanHand/Skin">
+		<color rgba="0.802 0.732 0.673 1.0"/>
+	</material>
 
 
 </robot>
