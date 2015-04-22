@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot name="tactile_glove_markers" xmlns:xacro="http://ros.org/wiki/xacro">
 	<xacro:macro name="tactile_glove" params="channel link mesh offset ns">
-		<tactile topic="/TactileGlove" data="data[${channel}]" link="human_hand_right_${link}" ns="${ns}">
+		<tactile topic="/TactileGlove" data="data[${channel}]" link="human_hand_right_${link}" ns="${ns}" xs="0 4095">
 			<geometry>
 				<mesh filename="package://human_hand_description/meshes/taxels/${mesh}.stl" scale="0.00101 0.00101 0.00101"/>
 			</geometry>
