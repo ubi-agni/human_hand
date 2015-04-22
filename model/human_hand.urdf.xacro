@@ -3,13 +3,13 @@
 
 	<!--
 		HUMAN HAND MODEL v 0.1 
-    urdf derived from pisa soft_hand
+    urdf derived from human soft_hand
     author Guillaume Walck
     meshes from GrabCAD, author Joerg Schmit
 		original CAD model available at: https://grabcad.com/library/human-left-hand/
 	-->
 
-	<xacro:include filename="$(find pisa_hand_description)/model/materials.urdf.xacro"/>
+	<xacro:include filename="$(find human_hand_description)/model/materials.urdf.xacro"/>
 
 	<xacro:property name="pi" value="3.1415926535897931" />
 
@@ -104,7 +104,7 @@
 			</inertial> -->
 			<visual>
 				<geometry>
-            <mesh filename="package://pisa_hand_description/meshes/${name}_proximal.stl" scale="0.001 0.001 .001" />
+            <mesh filename="package://human_hand_description/meshes/${name}_proximal.stl" scale="0.001 0.001 .001" />
 				</geometry>
 				<material name="HumanHand/Skin" />
 			</visual>
@@ -124,7 +124,7 @@
 		<link name="${prefix}${name}_middle_link">
 			<visual>
 				<geometry>
-					<mesh filename="package://pisa_hand_description/meshes/${name}_middle.stl" scale="0.001 0.001 .001" />
+					<mesh filename="package://human_hand_description/meshes/${name}_middle.stl" scale="0.001 0.001 .001" />
 				</geometry>
 				<material name="HumanHand/Skin" />
 			</visual>
@@ -143,7 +143,7 @@
 		<link name="${prefix}${name}_distal_link">
 			<visual> 
 				<geometry>
-					<mesh filename="package://pisa_hand_description/meshes/${name}_distal.stl" scale=" 0.001 0.001 .001" /> 
+					<mesh filename="package://human_hand_description/meshes/${name}_distal.stl" scale=" 0.001 0.001 .001" /> 
 				</geometry>
 				 <material name="HumanHand/Skin" /> 
 			</visual>
@@ -183,7 +183,7 @@
 				<visual>
           <origin xyz="0 0 0" rpy="0 0 0" /> 
 					<geometry>
-						<mesh filename="package://pisa_hand_description/meshes/thumb_base.stl" scale=" 0.001 0.001 .001" />
+						<mesh filename="package://human_hand_description/meshes/thumb_base.stl" scale=" 0.001 0.001 .001" />
 					</geometry>
 					<material name="HumanHand/Skin" />
 				</visual>
@@ -203,7 +203,7 @@
 		<link name="${name}_proximal_link">
 			<visual>
 				<geometry>
-					<mesh filename="package://pisa_hand_description/meshes/thumb_proximal.stl" scale="0.001 0.001 .001" />
+					<mesh filename="package://human_hand_description/meshes/thumb_proximal.stl" scale="0.001 0.001 .001" />
 				</geometry>
 				<material name="HumanHand/Skin" />
 			</visual>
@@ -221,7 +221,7 @@
 		<link name="${name}_distal_link">
 			<visual>
 				<geometry>
-					<mesh filename="package://pisa_hand_description/meshes/thumb_distal.stl" scale=" 0.001 0.001 .001" />
+					<mesh filename="package://human_hand_description/meshes/thumb_distal.stl" scale=" 0.001 0.001 .001" />
 				</geometry>
 				<material name="HumanHand/Skin" />
 			</visual>
@@ -243,7 +243,7 @@
 			<xacro:if value="${left}">
 				<visual>
 					<geometry>
-						<mesh filename="package://pisa_hand_description/meshes/palm.stl" scale="-0.001 -0.001 -0.001" />
+						<mesh filename="package://human_hand_description/meshes/palm.stl" scale="-0.001 -0.001 -0.001" />
 					</geometry>
 					<material name="HumanHand/Skin" />
 				</visual>
@@ -251,7 +251,7 @@
 			<xacro:unless value="${left}">
 				<visual>
 					<geometry>
-						<mesh filename="package://pisa_hand_description/meshes/palm.stl" scale=" .001 .001 .001" />
+						<mesh filename="package://human_hand_description/meshes/palm.stl" scale=" .001 .001 .001" />
 					</geometry>
 					<material name="HumanHand/Skin" />
 				</visual>

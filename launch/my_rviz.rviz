@@ -71,102 +71,102 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: false
-        pisa_hand_right_index_distal_link:
+        human_hand_right_index_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_index_knuckle_link:
+        human_hand_right_index_knuckle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        pisa_hand_right_index_middle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pisa_hand_right_index_proximal_link:
+        human_hand_right_index_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_little_distal_link:
+        human_hand_right_index_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_little_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        pisa_hand_right_little_middle_link:
+        human_hand_right_little_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_little_proximal_link:
+        human_hand_right_little_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_little_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_middle_distal_link:
+        human_hand_right_little_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_middle_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        pisa_hand_right_middle_middle_link:
+        human_hand_right_middle_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_middle_proximal_link:
+        human_hand_right_middle_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_middle_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_palm_link:
+        human_hand_right_middle_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_ring_distal_link:
+        human_hand_right_palm_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_ring_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        pisa_hand_right_ring_middle_link:
+        human_hand_right_ring_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_ring_proximal_link:
+        human_hand_right_ring_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_ring_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_thumb_distal_link:
+        human_hand_right_ring_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_thumb_fake_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        pisa_hand_right_thumb_knuckle_link:
+        human_hand_right_thumb_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        pisa_hand_right_thumb_proximal_link:
+        human_hand_right_thumb_fake_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        human_hand_right_thumb_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        human_hand_right_thumb_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -209,7 +209,7 @@ Visualization Manager:
       Length: 0.02
       Name: Axes
       Radius: 0.002
-      Reference Frame: pisa_hand_right_palm_link
+      Reference Frame: human_hand_right_palm_link
       Value: true
     - Class: rviz/Marker
       Enabled: true

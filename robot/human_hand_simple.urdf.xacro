@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="pisa_hand">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="human_hand">
 
-	<xacro:include filename="$(find pisa_hand_description)/model/human_hand.urdf.xacro"/>
+	<xacro:include filename="$(find human_hand_description)/model/human_hand.urdf.xacro"/>
 
 	<link name="box">
 		<visual>
@@ -49,7 +49,7 @@
 	<link name="wrist_right">
 	</link>
 
-	<xacro:human_hand parent="wrist_right" name="pisa_hand_right" left="false">
+	<xacro:human_hand parent="wrist_right" name="human_hand_right" left="false">
 		<origin xyz="0.002 0.009 0.038" rpy="0 0 0"/>
 	</xacro:human_hand>
 

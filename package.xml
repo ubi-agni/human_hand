@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <package>
-  <name>pisa_hand_description</name>
-  <version>0.0.0</version>
-  <description>The pisa_hand_description package</description>
+  <name>human_hand_description</name>
+  <version>0.0.1</version>
+  <description>The human_hand_description package</description>
 
-  <maintainer email="cjrosales@gmail.com">Carlos Rosales</maintainer>
-  <license>GPLv2</license>
+  <maintainer email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</maintainer>
+  <license>NO REDISTRIBUTION ACCEPTED</license>
   
+  <author>Guillaume Walck</author>
   <author>Carlos Rosales</author>
 
   <buildtool_depend>catkin</buildtool_depend>
