@@ -7,12 +7,12 @@ Panels:
         - /Global Options1
         - /Status1
         - /Grid1
+        - /Grid1/Status1
         - /RobotModel1
         - /TF1/Frames1
         - /TF1/Tree1
         - /Axes1
         - /MarkerArray1
-        - /MarkerArray1/Status1
       Splitter Ratio: 0.610801
     Tree Height: 649
   - Class: rviz/Selection
@@ -60,16 +60,11 @@ Visualization Manager:
       Collision Enabled: true
       Enabled: true
       Links:
-        All Links Enabled: false
+        All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        box:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: false
         human_hand_right_index_distal_link:
           Alpha: 1
           Show Axes: false
@@ -89,6 +84,10 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
+        human_hand_right_invisible_wire_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         human_hand_right_little_distal_link:
           Alpha: 1
           Show Axes: false
@@ -170,15 +169,7 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        wrist_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        wrist_right_fake_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        wrist_right_fake_2:
+        world:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -214,18 +205,13 @@ Visualization Manager:
       Marker Topic: /tactile_markers
       Name: MarkerArray
       Namespaces:
-        index: true
-        little: true
-        middle: true
-        palm: true
-        ring: true
-        thumb: true
+        {}
       Queue Size: 1
       Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
-    Fixed Frame: box
+    Fixed Frame: world
     Frame Rate: 30
   Name: root
   Tools:
@@ -246,22 +232,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.448538
+      Distance: 0.570101
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.0138902
-        Y: 0.259233
-        Z: 1.14289
+        X: 0.0136061
+        Y: 0.125187
+        Z: 0.126173
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.134796
+      Pitch: 0.0547963
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.78855
+      Yaw: 4.70355
     Saved: ~
 Window Geometry:
   Displays:

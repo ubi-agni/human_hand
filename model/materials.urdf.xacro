@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <robot>
 
-  <material name="HumanHand/Skin">
+	<material name="HumanHand/Skin">
 		<color rgba="0.802 0.732 0.673 1.0"/>
 	</material>
-
 
 </robot>

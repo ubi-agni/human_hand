@@ -4,7 +4,7 @@
 	<arg name="robot_name" default="human_hand_simple"/>
 	<arg name="use_rviz" default="true"/> 
 	<arg name="use_joint_state_publisher" default="true"/> 
-  <arg name="use_mimic_tag" default="true"/> <!-- the synergy is applied with pure kinematics -->
+	<arg name="use_mimic_tag" default="true"/> <!-- the synergy is applied with pure kinematics -->
 
 	<!-- LAUNCH IMPLEMENTATION -->
 	<param name="robot_description" command="$(find xacro)/xacro.py $(find human_hand_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=$(arg use_mimic_tag)" />
@@ -14,11 +14,9 @@
 		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
 	</group>
 
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"  /> 
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/> 
 
 	<group if="$(arg use_rviz)">
-		<node name="my_rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find human_hand_description)/launch/my_rviz.rviz" output="screen"/>
+		<node name="my_rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find human_hand_description)/launch/display.rviz" output="screen"/>
 	</group>
 </launch>
-
-
