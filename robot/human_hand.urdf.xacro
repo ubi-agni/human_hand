@@ -4,8 +4,8 @@
 	<xacro:include filename="$(find human_hand_description)/model/human_hand.urdf.xacro"/>
 
 	<link name="world"/>
-	<xacro:human_hand parent="world" name="human_hand_right" left="false" useMimicTag="$(arg use_mimic_tag)" >
-		<origin xyz="0.002 0.009 0.038" rpy="0 0 0"/>
+	<xacro:human_hand parent="world" name="human_hand_right" left="$(arg left_hand)" useMimicTag="$(arg use_mimic_tag)" >
+		<origin xyz="0 0 0" rpy="0 0 0"/>
 	</xacro:human_hand>
 
 </robot>

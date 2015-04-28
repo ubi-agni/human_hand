@@ -1,14 +1,13 @@
 <launch>
 	<!-- LAUNCH INTERFACE -->
 	<arg name="gui" default="true" />
-	<arg name="robot_name" default="human_hand"/>
+	<arg name="robot_name" default="twohands"/>
 	<arg name="use_rviz" default="true"/> 
 	<arg name="use_joint_state_publisher" default="true"/> 
 	<arg name="use_mimic_tag" default="true"/> <!-- the synergy is applied with pure kinematics -->
-	<arg name="left_hand" default="false"/> <!-- use right hand by default -->
 
 	<!-- LAUNCH IMPLEMENTATION -->
-	<param name="robot_description" command="$(find xacro)/xacro.py $(find human_hand_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=$(arg use_mimic_tag) left_hand:=$(arg left_hand)" />
+	<param name="robot_description" command="$(find xacro)/xacro $(find human_hand_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=$(arg use_mimic_tag)"/>
 	<param name="use_gui" value="$(arg gui)"/>
 
 	<group if="$(arg use_joint_state_publisher)">

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="human_hand">
+
+	<xacro:include filename="$(find human_hand_description)/model/human_hand.urdf.xacro"/>
+
+	<link name="world"/>
+	<xacro:human_hand parent="world" name="right_hand" left="false" useMimicTag="$(arg use_mimic_tag)" >
+		<origin xyz="+0.06 0.0 0" rpy="0 0 0"/>
+	</xacro:human_hand>
+	<xacro:human_hand parent="world" name="left_hand" left="true" useMimicTag="$(arg use_mimic_tag)" >
+		<origin xyz="-0.06 0 0" rpy="0 0 0"/>
+	</xacro:human_hand>
+
+</robot>
