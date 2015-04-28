@@ -1,76 +1,91 @@
 <?xml version="1.0"?>
 <robot name="tactile_glove_markers" xmlns:xacro="http://ros.org/wiki/xacro">
-	<xacro:macro name="tactile_glove" params="channel link mesh offset ns">
-		<tactile topic="/TactileGlove" data="data[${channel}]" link="human_hand_right_${link}" ns="${ns}" xs="0 4095">
+	<xacro:macro name="taxel" params="channel link mesh offset ns">
+		<tactile topic="/TactileGlove" data="data[${channel}]" link="${_name}${link}" ns="${ns}" xs="0 4095">
 			<geometry>
-				<mesh filename="package://human_hand_description/meshes/taxels/${mesh}.stl" scale="0.00101 0.00101 0.00101"/>
+				<mesh filename="package://human_hand_description/meshes/taxels/${mesh}.stl"
+				      scale="${0.00101*_reflect} 0.00101 0.00101"/>
 			</geometry>
 			<origin xyz="${offset}"/>
 		</tactile>
 	</xacro:macro>
 
-	<xacro:tactile_glove channel="0"  ns="index" link="index_distal_link" mesh="idd" offset="0 0 1e-3"/>
-	<xacro:tactile_glove channel="59" ns="index" link="index_distal_link" mesh="idi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="58" ns="index" link="index_distal_link" mesh="idm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="57" ns="index" link="index_distal_link" mesh="ido" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="56" ns="index" link="index_middle_link" mesh="imi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="55" ns="index" link="index_middle_link" mesh="imm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="54" ns="index" link="index_middle_link" mesh="imo" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="53" ns="index" link="index_proximal_link" mesh="ip" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="52" ns="index" link="index_proximal_link" mesh="ipi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="51" ns="little" link="little_distal_link" mesh="ldd" offset="0 0 1e-3"/>
-	<xacro:tactile_glove channel="50" ns="little" link="little_distal_link" mesh="ldi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="49" ns="little" link="little_distal_link" mesh="ldm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="48" ns="little" link="little_distal_link" mesh="ldo" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="47" ns="little" link="little_middle_link" mesh="lmi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="46" ns="little" link="little_middle_link" mesh="lmm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="45" ns="little" link="little_middle_link" mesh="lmo" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="44" ns="little" link="little_proximal_link" mesh="lp" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="43" ns="little" link="little_proximal_link" mesh="lpo" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="42" ns="middle" link="middle_distal_link" mesh="mdd" offset="0 0 1e-3"/>
-	<xacro:tactile_glove channel="41" ns="middle" link="middle_distal_link" mesh="mdi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="40" ns="middle" link="middle_distal_link" mesh="mdm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="21" ns="middle" link="middle_distal_link" mesh="mdo" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="20" ns="middle" link="middle_middle_link" mesh="mmi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="19" ns="middle" link="middle_middle_link" mesh="mmm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="18" ns="middle" link="middle_middle_link" mesh="mmo" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="35" ns="middle" link="middle_proximal_link" mesh="mp" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="22" ns="palm" link="palm_link" mesh="pcid" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="27" ns="palm" link="palm_link" mesh="pcim" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="24" ns="palm" link="palm_link" mesh="pcip" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="26" ns="palm" link="palm_link" mesh="pcmd" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="25" ns="palm" link="palm_link" mesh="pcmp" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="23" ns="palm" link="palm_link" mesh="pco" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="30" ns="palm" link="palm_link" mesh="pdi" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="29" ns="palm" link="palm_link" mesh="pdii" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="33" ns="palm" link="palm_link" mesh="pdl" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="32" ns="palm" link="palm_link" mesh="pdlo" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="31" ns="palm" link="palm_link" mesh="pdm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="28" ns="palm" link="palm_link" mesh="pdr" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="34" ns="palm" link="palm_link" mesh="pi" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="39" ns="palm" link="palm_link" mesh="ptid" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="39" ns="thumb" link="thumb_knuckle_link" mesh="ptid2" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="38" ns="palm" link="palm_link" mesh="ptip" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="38" ns="thumb" link="thumb_knuckle_link" mesh="ptip2" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="37" ns="palm" link="palm_link" mesh="ptmd" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="37" ns="thumb" link="thumb_knuckle_link" mesh="ptmd2" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="36" ns="palm" link="palm_link" mesh="ptmp" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="36" ns="thumb" link="thumb_knuckle_link" mesh="ptmp2" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="17" ns="palm" link="palm_link" mesh="ptod" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="16" ns="palm" link="palm_link" mesh="ptop" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="15" ns="ring" link="ring_distal_link" mesh="rdd" offset="0 0 1e-3"/>
-	<xacro:tactile_glove channel="14" ns="ring" link="ring_distal_link" mesh="rdi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="13" ns="ring" link="ring_distal_link" mesh="rdm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="12" ns="ring" link="ring_distal_link" mesh="rdo" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="11" ns="ring" link="ring_middle_link" mesh="rmi" offset="1e-3 0 0"/>
-	<xacro:tactile_glove channel="10" ns="ring" link="ring_middle_link" mesh="rmm" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="9" ns="ring" link="ring_middle_link" mesh="rmo" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="8" ns="ring" link="ring_proximal_link" mesh="rp" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="7" ns="thumb" link="thumb_distal_link" mesh="tdd" offset="0 0 1e-3"/>
-	<xacro:tactile_glove channel="6" ns="thumb" link="thumb_distal_link" mesh="tdi" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="5" ns="thumb" link="thumb_distal_link" mesh="tdm" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="4" ns="thumb" link="thumb_distal_link" mesh="tdo" offset="0 1e-3 0"/>
-	<xacro:tactile_glove channel="3" ns="thumb" link="thumb_proximal_link" mesh="tpi" offset="0 -1e-3 0"/>
-	<xacro:tactile_glove channel="2" ns="thumb" link="thumb_proximal_link" mesh="tpm" offset="-1e-3 0 0"/>
-	<xacro:tactile_glove channel="1" ns="thumb" link="thumb_proximal_link" mesh="tpo" offset="0 1e-3 0"/>
+	<xacro:macro name="tactile_glove" params="name reflect:=1">
+		<xacro:property name="_name" value="${name}_"/>
+		<xacro:property name="_reflect" value="${reflect}"/>
+
+		<xacro:taxel channel="45"  ns="index" link="index_distal_link" mesh="idd" offset="0 0 1e-3"/>
+		<xacro:taxel channel="42" ns="index" link="index_distal_link" mesh="ido" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="44" ns="index" link="index_distal_link" mesh="idm" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="19" ns="index" link="index_distal_link" mesh="idi" offset="${1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="33" ns="index" link="index_middle_link" mesh="imo" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="40" ns="index" link="index_middle_link" mesh="imm" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="28" ns="index" link="index_middle_link" mesh="imi" offset="${1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="43" ns="index" link="index_proximal_link" mesh="ip" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="17" ns="index" link="index_proximal_link" mesh="ipi" offset="${1e-3*_reflect} 0 0"/>
+
+		<xacro:taxel channel="34" ns="middle" link="middle_distal_link" mesh="mdd" offset="0 0 1e-3"/>
+		<xacro:taxel channel="48" ns="middle" link="middle_distal_link" mesh="mdo" offset="${-1e-3*_reflect} 0 0"/>
+<!--		<xacro:taxel channel="-1" ns="middle" link="middle_distal_link" mesh="mdm" offset="0 -1e-3 0"/> -->
+		<xacro:taxel channel="38" ns="middle" link="middle_distal_link" mesh="mdi" offset="${1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="49" ns="middle" link="middle_middle_link" mesh="mmo" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="37" ns="middle" link="middle_middle_link" mesh="mmm" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="39" ns="middle" link="middle_middle_link" mesh="mmi" offset="${1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="41" ns="middle" link="middle_proximal_link" mesh="mp" offset="0 -1e-3 0"/>
+
+		<xacro:taxel channel="61" ns="ring" link="ring_distal_link" mesh="rdd" offset="0 0 1e-3"/>
+		<xacro:taxel channel="55" ns="ring" link="ring_distal_link" mesh="rdo" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="52" ns="ring" link="ring_distal_link" mesh="rdm" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="50" ns="ring" link="ring_distal_link" mesh="rdi" offset="${1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="54" ns="ring" link="ring_middle_link" mesh="rmo" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="63" ns="ring" link="ring_middle_link" mesh="rmm" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="51" ns="ring" link="ring_middle_link" mesh="rmi" offset="${1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="62" ns="ring" link="ring_proximal_link" mesh="rp" offset="0 -1e-3 0"/>
+
+		<xacro:taxel channel="58" ns="little" link="little_distal_link" mesh="ldd" offset="0 0 1e-3"/>
+		<xacro:taxel channel="26" ns="little" link="little_distal_link" mesh="ldo" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="56" ns="little" link="little_distal_link" mesh="ldm" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="53" ns="little" link="little_distal_link" mesh="ldi" offset="${1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="23" ns="little" link="little_middle_link" mesh="lmo" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="60" ns="little" link="little_middle_link" mesh="lmm" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="57" ns="little" link="little_middle_link" mesh="lmi" offset="${1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="27" ns="little" link="little_proximal_link" mesh="lpo" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="59" ns="little" link="little_proximal_link" mesh="lp" offset="0 -1e-3 0"/>
+
+		<xacro:taxel channel="21" ns="palm" link="palm_link" mesh="pdlo" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="23" ns="palm" link="palm_link" mesh="pdl" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="25" ns="palm" link="palm_link" mesh="pdr" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="29" ns="palm" link="palm_link" mesh="pdm" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="30" ns="palm" link="palm_link" mesh="pdi" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="18" ns="palm" link="palm_link" mesh="pdii" offset="0 -1e-3 0"/>
+
+		<xacro:taxel channel="7" ns="palm" link="palm_link" mesh="pco" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="5" ns="palm" link="palm_link" mesh="pcmp" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="24" ns="palm" link="palm_link" mesh="pcmd" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="13" ns="palm" link="palm_link" mesh="pcip" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="2" ns="palm" link="palm_link" mesh="pcim" offset="0 -1e-3 0"/>n
+		<xacro:taxel channel="10" ns="palm" link="palm_link" mesh="pcid" offset="0 -1e-3 0"/>
+
+		<xacro:taxel channel="16" ns="palm" link="palm_link" mesh="pi" offset="0 -1e-3 0"/>
+
+		<xacro:taxel channel="4" ns="palm" link="palm_link" mesh="ptop" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="20" ns="palm" link="palm_link" mesh="ptod" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="11" ns="palm" link="palm_link" mesh="ptmp" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="6" ns="palm" link="palm_link" mesh="ptmd" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="8" ns="palm" link="palm_link" mesh="ptip" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="1" ns="palm" link="palm_link" mesh="ptid" offset="0 -1e-3 0"/>
+
+		<xacro:taxel channel="11" ns="thumb" link="thumb_knuckle_link" mesh="ptmp2" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="6" ns="thumb" link="thumb_knuckle_link" mesh="ptmd2" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="8" ns="thumb" link="thumb_knuckle_link" mesh="ptip2" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="1" ns="thumb" link="thumb_knuckle_link" mesh="ptid2" offset="0 -1e-3 0"/>
+
+		<xacro:taxel channel="15" ns="thumb" link="thumb_distal_link" mesh="tdd" offset="0 0 1e-3"/>
+		<xacro:taxel channel="12" ns="thumb" link="thumb_distal_link" mesh="tdo" offset="0 1e-3 0"/>
+		<xacro:taxel channel="9" ns="thumb" link="thumb_distal_link" mesh="tdm" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="0" ns="thumb" link="thumb_distal_link" mesh="tdi" offset="0 -1e-3 0"/>
+		<xacro:taxel channel="14" ns="thumb" link="thumb_proximal_link" mesh="tpo" offset="0 1e-3 0"/>
+		<xacro:taxel channel="31" ns="thumb" link="thumb_proximal_link" mesh="tpm" offset="${-1e-3*_reflect} 0 0"/>
+		<xacro:taxel channel="2" ns="thumb" link="thumb_proximal_link" mesh="tpi" offset="0 -1e-3 0"/>
+	</xacro:macro>
 </robot>
