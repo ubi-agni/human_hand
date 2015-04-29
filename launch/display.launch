@@ -13,6 +13,9 @@
 
 	<group if="$(arg use_joint_state_publisher)">
 		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+		<group unless="$(arg gui)">
+			<rosparam param="source_list" >["/synergy/joint_states"]</rosparam>  
+		</group>
 	</group>
 
 	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/> 
