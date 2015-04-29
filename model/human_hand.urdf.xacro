@@ -10,7 +10,7 @@
 	-->
 
 	<xacro:include filename="$(find human_hand_description)/model/materials.urdf.xacro"/>
-	<xacro:include filename="$(find human_hand_description)/model/glove_markers.urdf.xacro"/>
+	<xacro:include filename="$(find human_hand_description)/model/${tactile_mapping}.urdf.xacro"/>
 
 	<xacro:property name="pi" value="3.1415926535897931" />
 
