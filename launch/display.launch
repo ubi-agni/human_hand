@@ -3,9 +3,10 @@
 
 	<arg name="robot_name" default="human_hand"/>
 	<arg name="use_mimic_tag" default="true"/> <!-- the synergy is applied with pure kinematics -->
+	<arg name="tactile_mapping" default="P3"/>
 
 	<!-- load robot description -->
-	<param name="robot_description" command="$(find xacro)/xacro --inorder $(find human_hand_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=$(arg use_mimic_tag)"/>
+	<param name="robot_description" command="$(find xacro)/xacro --inorder $(find human_hand_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=$(arg use_mimic_tag) tactile_mapping:=$(arg tactile_mapping)"/>
 
 	<param name="use_gui" value="$(arg gui)"/>
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" >
