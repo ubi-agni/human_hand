@@ -3,7 +3,7 @@
 
 	<xacro:arg name="left_hand" default="false"/>
 	<xacro:arg name="use_mimic_tag" default="false"/>
-	<xacro:arg name="tactile_mapping" default="P3"/>
+	<xacro:arg name="tactile_mapping" default="P3r"/>
 
 	<xacro:property name="tactile_mapping" value="$(arg tactile_mapping)"/>
 	<xacro:include filename="$(find human_hand_description)/model/human_hand.urdf.xacro"/>

@@ -3,7 +3,7 @@
 
 	<arg name="robot_name" default="human_hand"/>
 	<arg name="use_mimic_tag" default="true"/> <!-- the synergy is applied with pure kinematics -->
-	<arg name="tactile_mapping" default="P3"/>
+	<arg name="tactile_mapping" default="P3r"/>
 
 	<!-- load robot description -->
 	<param name="robot_description" command="$(find xacro)/xacro --inorder $(find human_hand_description)/robot/$(arg robot_name).urdf.xacro use_mimic_tag:=$(arg use_mimic_tag) tactile_mapping:=$(arg tactile_mapping)"/>
@@ -13,8 +13,7 @@
 		<!-- listen to synergy/joint_states topic for external synergy joint provider -->
 		<rosparam if="$(arg use_mimic_tag)" param="source_list">["synergy/joint_states"]</rosparam>
 	</node>
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/> 
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 	<node name="tactile_marker_publisher" pkg="tactile_marker_publisher" type="tactile_marker_publisher" />
-
 	<node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find human_hand_description)/launch/display.rviz" output="screen"/>
 </launch>
