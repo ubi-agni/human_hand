@@ -28,14 +28,7 @@ catkin_package(
 
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
-install(DIRECTORY launch
-   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
-install(DIRECTORY model
-   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
-
-install(DIRECTORY robots
-   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
-
-install(DIRECTORY worlds
-   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+foreach(d launch model robots worlds)
+  install(DIRECTORY ${d} DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+endforeach(d)
