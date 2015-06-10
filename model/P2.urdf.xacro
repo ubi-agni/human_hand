@@ -12,7 +12,7 @@
 		</xacro:if>
 	</xacro:macro>
 
-	<xacro:macro name="tactile_glove" params="name reflect:=1">
+	<xacro:macro name="tactile_glove" params="name reflect:=1 tactMap">
 		<xacro:property name="_name" value="${name}_"/>
 		<xacro:property name="_reflect" value="${reflect}"/>
 

@@ -10,7 +10,7 @@
 	-->
 
 	<xacro:include filename="$(find human_hand_description)/model/materials.urdf.xacro"/>
-	<xacro:property name="_tactileMappingToLayout" value="{'P2':'P2', 'P3l':'P3', 'P3r':'P3'}"/>
+	<xacro:property name="_tactileMappingToLayout" value="${dict(P2='P2', P3l='P3', P3r='P3')}"/>
 
 	<!-- joint properties -->
 	<xacro:property name="abd_lb" value="-30" />
@@ -300,9 +300,9 @@
 
 		<xacro:finger parent="${name}_palm_link" parent_name="${name}" prefix="${name}_" name="little" reflect="${reflect}" position="${-0.04175*reflect} -0.003 0.079" orientation="0 0 0" proximal_len="${little_proximal_len}" middle_len="${little_middle_len}" useMimicTag="${useMimicTag}" abd_R="${little_abd_R}" inner_R="${little_inner_R *(inner_ub - inner_lb)*pi/180}" middle_R="${little_middle_R *(middle_ub - middle_lb)*pi/180}" outer_R="${little_outer_R *(outer_ub - outer_lb)*pi/180}" />
 
-		<xacro:include filename="$(find human_hand_description)/model/${tactile_mapping}.mapping.xacro"/>
+		<xacro:property name="tactile_mapping_file" value="../model/${tactile_mapping}.mapping.yaml"/>
 		<xacro:include filename="$(find human_hand_description)/model/${_tactileMappingToLayout[tactile_mapping]}.urdf.xacro"/>
-		<xacro:tactile_glove name="${name}" reflect="${reflect}"/>
+		<xacro:tactile_glove name="${name}" reflect="${reflect}" tactMap="${load_yaml(tactile_mapping_file)}"/>
 	</xacro:macro>
 
 </robot>
