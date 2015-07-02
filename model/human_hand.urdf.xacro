@@ -27,7 +27,7 @@
 			<dynamics damping="${props['damping']}" friction="${props['friction']}"/>
 			<xacro:if value="${use_synergy}">
 				<xacro:if value="${synergy_weight is None}">
-					<xacro:property name="synergy_weight" value="${synergies[finger+'_'+joint]}"/>
+					<xacro:property name="synergy_weight" value="${synergies[finger][joint]}"/>
 				</xacro:if>
 				<mimic joint="${synergy_joint}"
 				       multiplier="${synergy_weight*(props['bounds'][1] - props['bounds'][0])*pi/180}"/>
@@ -53,8 +53,8 @@
 	<xacro:macro name="finger"
 	             params="parent prefix:=$ finger reflect:=$ *origin
 	                     joint_props:=${properties['joints']}">
-		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger+'_proximal']}"/>
-		<xacro:property name="middle_len" value="${properties['link_lengths'][finger+'_middle']}"/>
+		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger]['proximal']}"/>
+		<xacro:property name="middle_len" value="${properties['link_lengths'][finger]['middle']}"/>
 
 		<!-- KNUCKLE -->
 
@@ -85,37 +85,39 @@
 		</xacro:segment>
 	</xacro:macro>
 
-	<!-- THUMB MODEL (thumb has one link less than fingers -->
+	<!-- THUMB MODEL -->
 	<xacro:macro name="thumb"
 	             params="parent prefix:=$ finger:='thumb' reflect:=$ *origin
 	                     joint_props:=${properties['joints']}">
-		<xacro:property name="base_len" value="${properties['link_lengths'][finger+'_base']}"/>
-		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger+'_proximal']}"/>
+		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger]['proximal']}"/>
+		<xacro:property name="middle_len" value="${properties['link_lengths'][finger]['middle']}"/>
 
 		<!-- KNUCKLE -->
 
-		<xacro:segment joint="abduction" link="fake" parent="${parent}" mesh="False">
+		<xacro:segment joint="abduction" link="knuckle" parent="${parent}"
+		               mesh="False" use_synergy="0">
 			<xacro:insert_block name="origin"/>
 			<axis xyz="1 0 0" />
-		</xacro:segment>
-
-		<xacro:segment joint="rotate" link="knuckle" parent="${prefix}${finger}_fake_link"
-		             mesh="thumb_base" use_synergy="0">
-			<origin xyz="0 0 0" rpy="0 0 0" />
-			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
 
 		<!-- PROXIMAL PHALANGE -->
 
 		<xacro:segment joint="proximal" link="proximal" parent="${prefix}${finger}_knuckle_link">
-			<origin xyz="0 0 ${base_len}" rpy="0 0 0"/>
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<axis xyz="0 ${-1*reflect} 0" />
+		</xacro:segment>
+
+		<!-- MIDDLE PHALANGE -->
+
+		<xacro:segment joint="middle" link="middle" parent="${prefix}${finger}_proximal_link">
+			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0"/>
 			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
 
 		<!-- DISTAL PHALANGE -->
 
-		<xacro:segment joint="distal" link="distal" parent="${prefix}${finger}_proximal_link">
-			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0"/>
+		<xacro:segment joint="distal" link="distal" parent="${prefix}${finger}_middle_link">
+			<origin xyz="0 0 ${middle_len}" rpy="0 0 0"/>
 			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
 	</xacro:macro>

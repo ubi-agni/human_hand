@@ -72,17 +72,17 @@
 		<xacro:taxel ns="palm" link="palm_link" mesh="ptip" channel="${tactMap.get('ptip', -1)}" offset="0 -1e-3 0"/>
 		<xacro:taxel ns="palm" link="palm_link" mesh="ptid" channel="${tactMap.get('ptid', -1)}" offset="0 -1e-3 0"/>
 
-		<xacro:taxel ns="thumb" link="thumb_knuckle_link" mesh="ptmp2" channel="${tactMap.get('ptop', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_knuckle_link" mesh="ptmd2" channel="${tactMap.get('ptod', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_knuckle_link" mesh="ptip2" channel="${tactMap.get('ptip', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_knuckle_link" mesh="ptid2" channel="${tactMap.get('ptid', -1)}" offset="0 -1e-3 0"/>
+		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="ptmp2" channel="${tactMap.get('ptop', -1)}" offset="0 -1e-3 0"/>
+		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="ptmd2" channel="${tactMap.get('ptod', -1)}" offset="0 -1e-3 0"/>
+		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="ptip2" channel="${tactMap.get('ptip', -1)}" offset="0 -1e-3 0"/>
+		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="ptid2" channel="${tactMap.get('ptid', -1)}" offset="0 -1e-3 0"/>
 
 		<xacro:taxel ns="thumb" link="thumb_distal_link" mesh="tdd" channel="${tactMap.get('tdd', -1)}" offset="0 0 1e-3"/>
 		<xacro:taxel ns="thumb" link="thumb_distal_link" mesh="tdo" channel="${tactMap.get('tdo', -1)}" offset="0 1e-3 0"/>
 		<xacro:taxel ns="thumb" link="thumb_distal_link" mesh="tdm" channel="${tactMap.get('tdm', -1)}" offset="${-1e-3*reflect} 0 0"/>
 		<xacro:taxel ns="thumb" link="thumb_distal_link" mesh="tdi" channel="${tactMap.get('tdi', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="tpo" channel="${tactMap.get('tpo', -1)}" offset="0 1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="tpm" channel="${tactMap.get('tpm', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="tpi" channel="${tactMap.get('tpi', -1)}" offset="0 -1e-3 0"/>
+		<xacro:taxel ns="thumb" link="thumb_middle_link" mesh="tpo" channel="${tactMap.get('tpo', -1)}" offset="0 1e-3 0"/>
+		<xacro:taxel ns="thumb" link="thumb_middle_link" mesh="tpm" channel="${tactMap.get('tpm', -1)}" offset="${-1e-3*reflect} 0 0"/>
+		<xacro:taxel ns="thumb" link="thumb_middle_link" mesh="tpi" channel="${tactMap.get('tpi', -1)}" offset="0 -1e-3 0"/>
 	</xacro:macro>
 </robot>
