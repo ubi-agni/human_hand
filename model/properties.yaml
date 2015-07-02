@@ -1,0 +1,74 @@
+joints:
+  default: &JOINT_DEFAULT
+    effort:   100
+    velocity: 100
+    damping:  0.0
+    friction: 0.0
+
+  finger: &FINGER_DEFAULT
+    abduction:
+      <<: *JOINT_DEFAULT
+      bounds: [-30, 30]
+    proximal:
+      <<: *JOINT_DEFAULT
+      bounds: [0, 90]
+    middle:
+      <<: *JOINT_DEFAULT
+      bounds: [0, 90]
+    distal:
+      <<: *JOINT_DEFAULT
+      bounds: [0, 90]
+
+  index:  *FINGER_DEFAULT
+  middle: *FINGER_DEFAULT
+  ring:   *FINGER_DEFAULT
+  little: *FINGER_DEFAULT
+  thumb:
+    <<:   *FINGER_DEFAULT
+    abduction:
+      <<: *JOINT_DEFAULT
+      bounds: [0, 90]
+    rotate:
+      <<: *JOINT_DEFAULT
+      bounds: [0, 90]
+
+  synergy:
+    <<: *JOINT_DEFAULT
+    bounds: [0.0, 1.0]
+
+link_lengths:
+  thumb_base: 0.05415
+  thumb_proximal: 0.03803
+
+  index_middle: 0.027
+  index_proximal: 0.046
+
+  middle_middle: 0.033
+  middle_proximal: 0.0495
+
+  ring_middle: 0.033
+  ring_proximal: 0.048
+
+  little_middle: 0.0215
+  little_proximal: 0.037
+
+synergies:
+  thumb_abduction: 1.3
+  thumb_proximal: 1.3
+  thumb_distal: 1.0
+  index_abduction: -0.2
+  index_proximal: 1.0
+  index_middle: 1.0
+  index_distal: 1.0
+  middle_abduction: 0.0
+  middle_proximal: 1.0
+  middle_middle: 1.0
+  middle_distal: 1.0
+  ring_abduction: 0.2
+  ring_proximal: 1.0
+  ring_middle: 1.0
+  ring_distal: 1.0
+  little_abduction: 0.4
+  little_proximal: 1.0
+  little_middle: 1.0
+  little_distal: 1.0

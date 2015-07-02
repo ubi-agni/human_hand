@@ -4,254 +4,131 @@
 	<!--
 	    HUMAN HAND MODEL v 0.1
 	    urdf derived from human Pisa SoftHand
-	    author Guillaume Walck
+	    author Guillaume Walck, Robert Haschke
 	    meshes from GrabCAD, author Joerg Schmit
 	    original CAD model available at: https://grabcad.com/library/human-left-hand/
 	-->
 
 	<xacro:include filename="$(find human_hand_description)/model/materials.urdf.xacro"/>
 
-	<!-- joint properties -->
-	<xacro:property name="abd_lb" value="-30" />
-	<xacro:property name="abd_ub" value="30" />
-	<xacro:property name="thumb_abd_lb" value="0" />
-	<xacro:property name="thumb_abd_ub" value="90" />
-	<xacro:property name="inner_lb" value="0" />
-	<xacro:property name="inner_ub" value="90" />
-	<xacro:property name="middle_lb" value="0" />
-	<xacro:property name="middle_ub" value="90" />
-	<xacro:property name="outer_lb" value="0" />
-	<xacro:property name="outer_ub" value="90" />
-	<xacro:property name="velocity" value="100" />
-	<xacro:property name="effort" value="100" />
-	<xacro:property name="damping" value="0.0" />
-	<xacro:property name="friction" value="0.0" />
+	<!-- a segment is composed of a joint and the attached link -->
+	<xacro:macro name="xacro:segment"
+	             params="prefix:=$|'' finger:=$ joint link parent reflect:=$ *origin *axis
+	                     synergy_weight:=None mesh:=1 useMimicTag:=$">
+		<xacro:property name="props" value="${joint_props[finger][joint]}"/>
 
-	<!-- link properties -->
-	<xacro:property name="thumb_base_len" value="0.05415" />
-	<xacro:property name="thumb_proximal_len" value="0.03803" />
-	<xacro:property name="index_middle_len" value="0.027" />
-	<xacro:property name="index_proximal_len" value="0.046" />
-	<xacro:property name="middle_middle_len" value="0.033" />
-	<xacro:property name="middle_proximal_len" value="0.0495" />
-	<xacro:property name="ring_middle_len" value="0.033" />
-	<xacro:property name="ring_proximal_len" value="0.048" />
-	<xacro:property name="little_middle_len" value="0.0215" />
-	<xacro:property name="little_proximal_len" value="0.037" />
-
-	<!-- synergy vector -->
-	<xacro:property name="thumb_abd_R" value="1.3" />
-	<xacro:property name="thumb_inner_R" value="1.3" />
-	<xacro:property name="thumb_outer_R" value="1.0" />
-	<xacro:property name="index_abd_R" value="-0.2" />
-	<xacro:property name="index_inner_R" value="1.0" />
-	<xacro:property name="index_middle_R" value="1.0" />
-	<xacro:property name="index_outer_R" value="1.0" />
-	<xacro:property name="middle_abd_R" value="0.0" />
-	<xacro:property name="middle_inner_R" value="1.0" />
-	<xacro:property name="middle_middle_R" value="1.0" />
-	<xacro:property name="middle_outer_R" value="1.0" />
-	<xacro:property name="ring_abd_R" value="0.2" />
-	<xacro:property name="ring_inner_R" value="1.0" />
-	<xacro:property name="ring_middle_R" value="1.0" />
-	<xacro:property name="ring_outer_R" value="1.0" />
-	<xacro:property name="little_abd_R" value="0.4" />
-	<xacro:property name="little_inner_R" value="1.0" />
-	<xacro:property name="little_middle_R" value="1.0" />
-	<xacro:property name="little_outer_R" value="1.0" />
-
-	<!-- synergy joint properties -->
-	<xacro:property name="synergy_lb" value="0.0" />
-	<xacro:property name="synergy_ub" value="1.0" />
-	<xacro:property name="max_synergy_velocity" value="100" />
-	<xacro:property name="max_synergy_effort" value="100" />
-	<xacro:property name="synergy_damping" value="0.0" />
-	<xacro:property name="synergy_friction" value="0.0" />
-
-	<!-- SOFT FINGER model -->
-	<!-- 4 fingers are equal (index, middle, ring, little) -->
-	<xacro:macro name="finger" params="tactile_mapping:=$ parent parent_name prefix name reflect position orientation proximal_len middle_len useMimicTag abd_R inner_R middle_R outer_R index:=1 middle:=0 ring:=0 little:=0 ">
-
-		<!-- KNUCKLE -->
-		<joint name="${prefix}${name}_abd_joint" type="revolute">
-			<origin xyz="${position}" rpy="${orientation}" />
+		<joint name="${prefix}${finger}_${joint}_joint" type="revolute">
+			<xacro:insert_block name="origin"/>
 			<parent link="${parent}"/>
-			<child link="${prefix}${name}_knuckle_link"/>
-			<axis xyz="0 ${-1*reflect} 0" />
-			<limit lower="${abd_lb *pi/180}" upper="${abd_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
-			<dynamics damping="${damping}" friction="${friction}"/>
+			<child link="${prefix}${finger}_${link}_link"/>
+			<xacro:insert_block name="axis"/>
+			<limit lower="${props['bounds'][0]*pi/180}" upper="${props['bounds'][1]*pi/180}"
+			       effort="${props['effort']}" velocity="${props['velocity']}"/>
+			<dynamics damping="${props['damping']}" friction="${props['friction']}"/>
 			<xacro:if value="${useMimicTag}">
-				<mimic joint="${parent_name}_synergy_joint" multiplier="${abd_R}"/>
+				<xacro:if value="${synergy_weight is None}">
+					<xacro:property name="synergy_weight" value="${synergies[finger+'_'+joint]}"/>
+				</xacro:if>
+				<mimic joint="${synergy_joint}"
+				       multiplier="${synergy_weight*(props['bounds'][1] - props['bounds'][0])*pi/180}"/>
 			</xacro:if>
 		</joint>
-
-		<link name="${prefix}${name}_knuckle_link"/>
-
-		<!-- PROXIMAL PHALANGE -->
-		<joint name="${prefix}${name}_inner_joint" type="revolute">
-			<origin xyz="0 0 0" rpy="0 0 0" />
-			<parent link="${prefix}${name}_knuckle_link"/>
-			<child link="${prefix}${name}_proximal_link"/>
-			<axis xyz="1 0 0" />
-			<limit lower="${inner_lb *pi/180}" upper="${inner_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
-			<dynamics damping="${damping}" friction="${friction}"/>
-			<xacro:if value="${useMimicTag}">
-				<mimic joint="${parent_name}_synergy_joint" multiplier="${inner_R}"/>
+		<link name="${prefix}${finger}_${link}_link">
+			<xacro:if value="${mesh != 0}">
+				<visual>
+					<geometry>
+						<xacro:if value="${mesh == 1}">
+							<xacro:property name="mesh" value="${finger}_${link}"/>
+						</xacro:if>
+						<mesh filename="package://human_hand_description/model/meshes/${mesh}.stl"
+						      scale="${0.001*reflect} 0.001 .001"/>
+					</geometry>
+					<material name="HumanHand/Skin" />
+				</visual>
 			</xacro:if>
-		</joint>
-
-
-		<link name="${prefix}${name}_proximal_link">
-			<!-- <inertial>
-			     <xacro:insert_block name="phalanx_inertia"/>
-			     </inertial> -->
-			<visual>
-				<geometry>
-					<mesh filename="package://human_hand_description/model/meshes/${name}_proximal.stl"
-					      scale="${0.001*reflect} 0.001 .001" />
-				</geometry>
-				<material name="HumanHand/Skin" />
-			</visual>
-		</link>
-
-		<!-- MIDDLE PHALANGE -->
-		<joint name="${prefix}${name}_middle_joint" type="revolute">
-			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0" />
-			<parent link="${prefix}${name}_proximal_link"/>
-			<child link="${prefix}${name}_middle_link"/>
-			<axis xyz="1 0 0" />
-			<limit lower="${middle_lb *pi/180}" upper="${middle_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
-			<dynamics damping="${damping}" friction="${friction}"/>
-			<xacro:if value="${useMimicTag}">
-				<mimic joint="${parent_name}_synergy_joint" multiplier="${middle_R}"/>
-			</xacro:if>
-		</joint>
-
-
-		<link name="${prefix}${name}_middle_link">
-			<visual>
-				<geometry>
-					<mesh filename="package://human_hand_description/model/meshes/${name}_middle.stl"
-					      scale="${0.001*reflect} 0.001 .001" />
-				</geometry>
-				<material name="HumanHand/Skin" />
-			</visual>
-		</link>
-
-		<!-- DISTAL PHALANGE -->
-		<joint name="${prefix}${name}_outer_joint" type="revolute">
-			<origin xyz="0.0 0 ${middle_len}" rpy="0 0 0" />
-			<parent link="${prefix}${name}_middle_link"/>
-			<child link="${prefix}${name}_distal_link"/>
-			<axis xyz="1 0 0" />
-			<limit lower="${outer_lb *pi/180}" upper="${outer_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
-			<dynamics damping="${damping}" friction="${friction}"/>
-			<xacro:if value="${useMimicTag}">
-				<mimic joint="${parent_name}_synergy_joint" multiplier="${outer_R}"/>
-			</xacro:if>
-		</joint>
-
-		<link name="${prefix}${name}_distal_link">
-			<visual>
-				<geometry>
-					<mesh filename="package://human_hand_description/model/meshes/${name}_distal.stl"
-					      scale="${0.001*reflect} 0.001 .001" />
-				</geometry>
-				<material name="HumanHand/Skin" />
-			</visual>
 		</link>
 	</xacro:macro>
 
-	<!-- THUMB MODEL -->
-	<!-- It has one joint less than rest of fingers -->
-	<xacro:macro name="thumb" params="parent parent_name name reflect position orientation base_len proximal_len  useMimicTag abd_R inner_R outer_R ">
+	<!-- FINGER MODEL -->
+	<xacro:macro name="finger"
+	             params="parent prefix:=$ finger reflect:=$ *origin
+	                     joint_props:=${properties['joints']}">
+		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger+'_proximal']}"/>
+		<xacro:property name="middle_len" value="${properties['link_lengths'][finger+'_middle']}"/>
 
-		<!-- THUMB -->
 		<!-- KNUCKLE -->
-		<joint name="${name}_abd_joint" type="revolute">
-			<origin xyz="${position}" rpy="${orientation}" />
-			<parent link="${parent}"/>
-			<child link="${name}_fake_link"/>
-			<axis xyz="1 0 0" />
-			<limit lower="${thumb_abd_lb *pi/180}" upper="${thumb_abd_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
-			<dynamics damping="${damping}" friction="${friction}"/>
-			<xacro:if value="${useMimicTag}">
-				<mimic joint="${parent_name}_synergy_joint" multiplier="${abd_R}"/>
-			</xacro:if>
-		</joint>
 
-		<link name="${name}_fake_link"/>
-
-		<joint name="${name}_rot_joint" type="revolute">
-			<origin xyz="0 0 0" rpy="0 0 0" />
-			<parent link="${name}_fake_link"/>
-			<child link="${name}_knuckle_link"/>
+		<xacro:segment joint="abduction" link="knuckle" parent="${parent}" mesh="0">
+			<xacro:insert_block name="origin"/>
 			<axis xyz="0 ${-1*reflect} 0" />
-			<limit lower="${thumb_abd_lb *pi/180}" upper="${thumb_abd_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
-			<dynamics damping="${damping}" friction="${friction}"/>
-		</joint>
-
-		<link name="${name}_knuckle_link">
-			<visual>
-				<origin xyz="0 0 0" rpy="0 0 0" />
-				<geometry>
-					<mesh filename="package://human_hand_description/model/meshes/thumb_base.stl"
-					      scale="${0.001*reflect} 0.001 .001" />
-				</geometry>
-				<material name="HumanHand/Skin" />
-			</visual>
-		</link>
+		</xacro:segment>
 
 		<!-- PROXIMAL PHALANGE -->
-		<joint name="${name}_inner_joint" type="revolute">
-			<origin xyz="0.0 0.0 ${base_len}" rpy="0.0 0.0 0.0" />
 
-			<parent link="${name}_knuckle_link"/>
-			<child link="${name}_proximal_link"/>
-			<axis xyz="0 ${-1*reflect} 0" />
-			<limit lower="${inner_lb *pi/180}" upper="${inner_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
-			<dynamics damping="${damping}" friction="${friction}"/>
-			<xacro:if value="${useMimicTag}">
-				<mimic joint="${parent_name}_synergy_joint" multiplier="${inner_R}"/>
-			</xacro:if>
-		</joint>
+		<xacro:segment joint="proximal" link="proximal" parent="${prefix}${finger}_knuckle_link">
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<axis xyz="1 0 0" />
+		</xacro:segment>
 
-		<link name="${name}_proximal_link">
-			<visual>
-				<geometry>
-					<mesh filename="package://human_hand_description/model/meshes/thumb_proximal.stl"
-					      scale="${0.001*reflect} 0.001 .001" />
-				</geometry>
-				<material name="HumanHand/Skin" />
-			</visual>
-		</link>
+		<!-- MIDDLE PHALANGE -->
+
+		<xacro:segment joint="middle" link="middle" parent="${prefix}${finger}_proximal_link">
+			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0"/>
+			<axis xyz="1 0 0" />
+		</xacro:segment>
 
 		<!-- DISTAL PHALANGE -->
-		<joint name="${name}_outer_joint" type="revolute">
-			<origin xyz="0.0 0 ${proximal_len}" rpy="0 0 0" />
-			<parent link="${name}_proximal_link"/>
-			<child link="${name}_distal_link"/>
-			<axis xyz="0 ${-1*reflect} 0" />
-			<limit lower="${outer_lb *pi/180}" upper="${outer_ub *pi/180}" effort="${effort}" velocity="${velocity}"/>
-			<xacro:if value="${useMimicTag}">
-				<mimic joint="${parent_name}_synergy_joint" multiplier="${outer_R}"/>
-			</xacro:if>
-		</joint>
 
-		<link name="${name}_distal_link">
-			<visual>
-				<geometry>
-					<mesh filename="package://human_hand_description/model/meshes/thumb_distal.stl"
-					      scale="${0.001*reflect} 0.001 .001" />
-				</geometry>
-				<material name="HumanHand/Skin" />
-			</visual>
-		</link>
+		<xacro:segment joint="distal" link="distal" parent="${prefix}${finger}_middle_link">
+			<origin xyz="0 0 ${middle_len}" rpy="0 0 0"/>
+			<axis xyz="1 0 0" />
+		</xacro:segment>
+	</xacro:macro>
+
+	<!-- THUMB MODEL (thumb has one link less than fingers -->
+	<xacro:macro name="thumb"
+	             params="parent prefix:=$ finger:='thumb' reflect:=$ *origin
+	                     joint_props:=${properties['joints']}">
+		<xacro:property name="base_len" value="${properties['link_lengths'][finger+'_base']}"/>
+		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger+'_proximal']}"/>
+
+		<!-- KNUCKLE -->
+
+		<xacro:segment joint="abduction" link="fake" parent="${parent}" mesh="False">
+			<xacro:insert_block name="origin"/>
+			<axis xyz="1 0 0" />
+		</xacro:segment>
+
+		<xacro:segment joint="rotate" link="knuckle" parent="${prefix}${finger}_fake_link"
+		             mesh="thumb_base" useMimicTag="0">
+			<origin xyz="0 0 0" rpy="0 0 0" />
+			<axis xyz="0 ${-1*reflect} 0" />
+		</xacro:segment>
+
+		<!-- PROXIMAL PHALANGE -->
+
+		<xacro:segment joint="proximal" link="proximal" parent="${prefix}${finger}_knuckle_link">
+			<origin xyz="0 0 ${base_len}" rpy="0 0 0"/>
+			<axis xyz="0 ${-1*reflect} 0" />
+		</xacro:segment>
+
+		<!-- DISTAL PHALANGE -->
+
+		<xacro:segment joint="distal" link="distal" parent="${prefix}${finger}_proximal_link">
+			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0"/>
+			<axis xyz="0 ${-1*reflect} 0" />
+		</xacro:segment>
 	</xacro:macro>
 
 
 	<!-- HUMAN HAND MODEL -->
-	<xacro:macro name="human_hand" params="parent name useMimicTag side:='' tactile_mapping:='' *origin">
+	<xacro:macro name="human_hand"
+	             params="parent prefix:='' useMimicTag side:='' tactile_mapping:='' *origin">
+		<!-- load kinematics properties -->
+		<xacro:property name="properties" value="${load_yaml('../model/properties.yaml')}"/>
+		<xacro:property name="synergies" value="${properties['synergies']}"/>
+
+		<!-- load taxel mapping -->
 		<xacro:if value="${tactile_mapping not in ['', '-']}">
 			<xacro:property name="mapping" value="${load_yaml('../model/taxel.yaml')[tactile_mapping]}"/>
 			<!-- if side is not yet specified, try to fetch it from the mapping -->
@@ -264,13 +141,14 @@
 		<xacro:property name="reflect" value="${dict(right=1, left=-1)[side]}" />
 
 		<!-- PALM -->
-		<joint name="${name}_palm_joint" type="fixed" >
+
+		<joint name="${prefix}palm_joint" type="fixed" >
 			<xacro:insert_block name="origin"/>
 			<parent link="${parent}" />
-			<child link="${name}_palm_link" />
+			<child link="${prefix}palm_link" />
 		</joint>
 
-		<link name="${name}_palm_link">
+		<link name="${prefix}palm_link">
 			<visual>
 				<geometry>
 					<mesh filename="package://human_hand_description/model/meshes/palm.stl"
@@ -280,35 +158,50 @@
 			</visual>
 		</link>
 
-		<!-- MOTOR JOINT -->
 		<xacro:if value="${useMimicTag}">
-			<joint name="${name}_synergy_joint" type="revolute" >
-				<parent link="${name}_palm_link" />
-				<child link="${name}_invisible_wire_link"/>
+			<xacro:property name="synergy_joint" value="${prefix}synergy_joint"/>
+			<!-- SYNERGY JOINT -->
+
+			<joint name="${synergy_joint}" type="revolute">
+				<parent link="${prefix}palm_link" />
+				<child link="${prefix}dummy_synergy_link"/>
 				<axis xyz="0 0 1" />
-				<limit lower="${synergy_lb}" upper="${synergy_ub}" effort="${max_synergy_effort}" velocity="${max_synergy_velocity}"/>
-				<dynamics damping="${synergy_damping}" friction="${synergy_friction}"/>
+
+				<xacro:property name="props" value="${properties['joints']['synergy']}"/>
+				<limit lower="${props['bounds'][0]}" upper="${props['bounds'][1]}"
+				       effort="${props['effort']}" velocity="${props['velocity']}"/>
+				<dynamics damping="${props['damping']}" friction="${props['friction']}"/>
 			</joint>
-			<link name="${name}_invisible_wire_link"/>
+			<link name="${prefix}dummy_synergy_link"/>
 		</xacro:if>
 
-
 		<!-- THUMB AND FINGERS -->
-		<xacro:thumb parent="${name}_palm_link" parent_name="${name}" name="${name}_thumb" reflect="${reflect}" position="${0.02475*reflect} -0.0125 0.0125" orientation="0.0 ${0.6240*reflect} 0" base_len="${thumb_base_len}" proximal_len="${thumb_proximal_len}" useMimicTag="${useMimicTag}" abd_R="${thumb_abd_R *(thumb_abd_ub - thumb_abd_lb)*pi/180}"  inner_R="${thumb_inner_R *(inner_ub - inner_lb)*pi/180}" outer_R="${thumb_outer_R *(outer_ub - outer_lb)*pi/180}" />
 
-		<xacro:finger parent="${name}_palm_link" parent_name="${name}" prefix="${name}_" name="index" reflect="${reflect}" position="${0.02175*reflect} -0.002 0.099" orientation="0 0 0" proximal_len="${index_proximal_len}" middle_len="${index_middle_len}"   useMimicTag="${useMimicTag}" abd_R="${index_abd_R}" inner_R="${index_inner_R *(inner_ub - inner_lb)*pi/180}" middle_R="${index_middle_R *(middle_ub - middle_lb)*pi/180}" outer_R="${index_outer_R *(outer_ub - outer_lb)*pi/180}" />
+		<xacro:thumb parent="${prefix}palm_link" finger="thumb">
+			<origin xyz="${0.02475*reflect} -0.0125 0.0125" rpy="0.0 ${0.6240*reflect} 0"/>
+		</xacro:thumb>
 
-		<xacro:finger parent="${name}_palm_link" parent_name="${name}" prefix="${name}_" name="middle" reflect="${reflect}" position="${-0.002*reflect} 0.0015 0.0955" orientation="0 0 0.0" proximal_len="${middle_proximal_len}" middle_len="${middle_middle_len}" useMimicTag="${useMimicTag}" abd_R="${middle_abd_R}" inner_R="${middle_inner_R *(inner_ub - inner_lb)*pi/180}" middle_R="${middle_middle_R *(middle_ub - middle_lb)*pi/180}" outer_R="${middle_outer_R *(outer_ub - outer_lb)*pi/180}"  />
+		<xacro:finger parent="${prefix}palm_link" finger="index">
+			<origin xyz="${0.02175*reflect} -0.002 0.099" rpy="0 0 0"/>
+		</xacro:finger>
 
-		<xacro:finger parent="${name}_palm_link" parent_name="${name}" prefix="${name}_" name="ring" reflect="${reflect}" position="${-0.02225*reflect} 0.0010 0.090" orientation="0 0 0" proximal_len="${ring_proximal_len}" middle_len="${ring_middle_len}" useMimicTag="${useMimicTag}" abd_R="${ring_abd_R}" inner_R="${ring_inner_R *(inner_ub - inner_lb)*pi/180}" middle_R="${ring_middle_R *(middle_ub - middle_lb)*pi/180}" outer_R="${ring_outer_R *(outer_ub - outer_lb)*pi/180}" />
+		<xacro:finger parent="${prefix}palm_link" finger="middle">
+			<origin xyz="${-0.002*reflect} 0.0015 0.0955" rpy="0 0 0"/>
+		</xacro:finger>
 
-		<xacro:finger parent="${name}_palm_link" parent_name="${name}" prefix="${name}_" name="little" reflect="${reflect}" position="${-0.04175*reflect} -0.003 0.079" orientation="0 0 0" proximal_len="${little_proximal_len}" middle_len="${little_middle_len}" useMimicTag="${useMimicTag}" abd_R="${little_abd_R}" inner_R="${little_inner_R *(inner_ub - inner_lb)*pi/180}" middle_R="${little_middle_R *(middle_ub - middle_lb)*pi/180}" outer_R="${little_outer_R *(outer_ub - outer_lb)*pi/180}" />
+		<xacro:finger parent="${prefix}palm_link" finger="ring">
+			<origin xyz="${-0.02225*reflect} 0.0010 0.090" rpy="0 0 0"/>
+		</xacro:finger>
 
+		<xacro:finger parent="${prefix}palm_link" finger="little">
+			<origin xyz="${-0.04175*reflect} -0.003 0.079" rpy="0 0 0"/>
+		</xacro:finger>
 
 		<!-- TACTILE MARKERS -->
+
 		<xacro:if value="${tactile_mapping not in ['', '-']}">
 			<xacro:include filename="$(find human_hand_description)/model/${mapping['layout']}.urdf.xacro"/>
-			<xacro:tactile_glove name="${name}" reflect="${reflect}" tactMap="${mapping}"/>
+			<xacro:tactile_glove prefix="${prefix}" reflect="${reflect}" tactMap="${mapping}"/>
 		</xacro:if>
 	</xacro:macro>
 

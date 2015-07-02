@@ -1,15 +1,13 @@
 <launch>
 	<arg name="gui" default="true" />
-
-	<arg name="robot_name" default="twohands"/>
-	<arg name="use_mimic_tag" default="true"/> <!-- the synergy is applied with pure kinematics -->
+	<arg name="use_mimic_tag" default="true"/>
 
 	<!-- load robot description -->
-	<param name="robot_description" command="$(find xacro)/xacro --inorder $(find human_hand_description)/robots/$(arg robot_name).urdf.xacro use_mimic_tag:=$(arg use_mimic_tag)"/>
+	<param name="robot_description" command="$(find xacro)/xacro --inorder $(find human_hand_description)/robots/twohands.urdf.xacro use_mimic_tag:=$(arg use_mimic_tag)"/>
 
 	<param name="use_gui" value="$(arg gui)"/>
 	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
-	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/> 
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher"/>
 	<node name="tactile_marker_publisher" pkg="tactile_marker_publisher" type="tactile_marker_publisher" />
 
 	<node name="rviz" pkg="rviz" type="rviz" respawn="false" args="-d $(find human_hand_description)/launch/display.rviz" output="screen"/>

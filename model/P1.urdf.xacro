@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <robot name="tactile_glove_markers" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:macro name="taxel" params="channel link mesh offset ns">
+	<xacro:macro name="taxel" params="prefix:=$ channel link mesh offset ns">
 		<xacro:if value="${channel >= 0}">
-		<tactile topic="TactileGlove" data="data[${channel}]" link="${name_}${link}" ns="${ns}" xs="0 4095">
+		<tactile topic="TactileGlove" data="data[${channel}]" link="${prefix}${link}" ns="${ns}" xs="0 4095">
 			<geometry>
 				<mesh filename="package://human_hand_description/model/meshes/taxels/${mesh}.stl"
 				      scale="${0.00101*reflect} 0.00101 0.00101"/>
@@ -12,9 +12,7 @@
 		</xacro:if>
 	</xacro:macro>
 
-	<xacro:macro name="tactile_glove" params="name reflect:=1 tactMap">
-		<xacro:property name="name_" value="${name}_"/>
-
+	<xacro:macro name="tactile_glove" params="prefix reflect:=1 tactMap">
 		<xacro:taxel ns="index" link="index_distal_link" mesh="idd" channel="${tactMap.get('idd', -1)}" offset="0 0 1e-3"/>
 		<xacro:taxel ns="index" link="index_distal_link" mesh="ido" channel="${tactMap.get('ido', -1)}" offset="${-1e-3*reflect} 0 0"/>
 		<xacro:taxel ns="index" link="index_distal_link" mesh="idm" channel="${tactMap.get('idm', -1)}" offset="0 -1e-3 0"/>
