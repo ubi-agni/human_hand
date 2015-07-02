@@ -14,7 +14,7 @@
 	<!-- a segment is composed of a joint and the attached link -->
 	<xacro:macro name="xacro:segment"
 	             params="prefix:=$|'' finger:=$ joint link parent reflect:=$ *origin *axis
-	                     synergy_weight:=None mesh:=1 useMimicTag:=$">
+	                     synergy_weight:=None mesh:=1 use_synergy:=$">
 		<xacro:property name="props" value="${joint_props[finger][joint]}"/>
 
 		<joint name="${prefix}${finger}_${joint}_joint" type="revolute">
@@ -25,7 +25,7 @@
 			<limit lower="${props['bounds'][0]*pi/180}" upper="${props['bounds'][1]*pi/180}"
 			       effort="${props['effort']}" velocity="${props['velocity']}"/>
 			<dynamics damping="${props['damping']}" friction="${props['friction']}"/>
-			<xacro:if value="${useMimicTag}">
+			<xacro:if value="${use_synergy}">
 				<xacro:if value="${synergy_weight is None}">
 					<xacro:property name="synergy_weight" value="${synergies[finger+'_'+joint]}"/>
 				</xacro:if>
@@ -100,7 +100,7 @@
 		</xacro:segment>
 
 		<xacro:segment joint="rotate" link="knuckle" parent="${prefix}${finger}_fake_link"
-		             mesh="thumb_base" useMimicTag="0">
+		             mesh="thumb_base" use_synergy="0">
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
@@ -123,7 +123,7 @@
 
 	<!-- HUMAN HAND MODEL -->
 	<xacro:macro name="human_hand"
-	             params="parent prefix:='' useMimicTag side:='' tactile_mapping:='' *origin">
+	             params="parent prefix:='' use_synergy side:='' tactile_mapping:='' *origin">
 		<!-- load kinematics properties -->
 		<xacro:property name="properties" value="${load_yaml('../model/properties.yaml')}"/>
 		<xacro:property name="synergies" value="${properties['synergies']}"/>
@@ -158,7 +158,7 @@
 			</visual>
 		</link>
 
-		<xacro:if value="${useMimicTag}">
+		<xacro:if value="${use_synergy}">
 			<xacro:property name="synergy_joint" value="${prefix}synergy_joint"/>
 			<!-- SYNERGY JOINT -->
 

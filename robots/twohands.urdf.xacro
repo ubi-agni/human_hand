@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="human_hand">
 
-	<xacro:arg name="use_mimic_tag" default="false"/>
+	<xacro:arg name="use_synergy" default="false"/>
 
 	<xacro:include filename="../model/human_hand.urdf.xacro"/>
 
 	<link name="world"/>
 	<xacro:human_hand parent="world" prefix="right_" side="right"
-	                  useMimicTag="$(arg use_mimic_tag)"
+	                  use_synergy="$(arg use_synergy)"
 	                  tactile_mapping="">
 		<origin xyz="+0.06 0.0 0" rpy="0 0 0"/>
 	</xacro:human_hand>
 	<xacro:human_hand parent="world" prefix="left_" side="left"
-	                  useMimicTag="$(arg use_mimic_tag)"
+	                  use_synergy="$(arg use_synergy)"
 	                  tactile_mapping="">
 		<origin xyz="-0.06 0 0" rpy="0 0 0"/>
 	</xacro:human_hand>

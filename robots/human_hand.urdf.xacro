@@ -3,7 +3,7 @@
 
 	<!-- side can be left | right | '' | '-' (meaning, fetch from mapping) -->
 	<xacro:arg name="side" default=""/>
-	<xacro:arg name="use_mimic_tag" default="false"/>
+	<xacro:arg name="use_synergy" default="false"/>
 	<xacro:arg name="tactile_mapping" default=""/>
 
 	<xacro:include filename="../model/human_hand.urdf.xacro"/>
@@ -11,7 +11,7 @@
 	<link name="world"/>
 	<xacro:property name="side" value="$(arg side)"/>
 	<xacro:human_hand parent="world" prefix="${side + '_' if side not in ['','-'] else ''"
-	                  side="$(arg side)" useMimicTag="$(arg use_mimic_tag)"
+	                  side="$(arg side)" use_synergy="$(arg use_synergy)"
 	                  tactile_mapping="$(arg tactile_mapping)">
 		<origin xyz="0 0 0" rpy="0 0 0"/>
 	</xacro:human_hand>
