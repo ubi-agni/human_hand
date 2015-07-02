@@ -1,5 +1,6 @@
 P1:
   layout: P1
+  handedness: right
   idd: 6
   idi: 7
   idm: 8
@@ -40,6 +41,7 @@ P1:
 
 P2:
   layout: P1
+  handedness: right
   bar: 14
   idd: 17
   idi: 18
@@ -98,6 +100,7 @@ P2:
 
 P3l:
   layout: P3
+  handedness: left
   idd: 45
   idi: 19
   idm: 44
@@ -160,6 +163,7 @@ P3l:
 
 P3r:
   layout: P3
+  handedness: right
   idd: 60
   idi: 1
   idm: 51

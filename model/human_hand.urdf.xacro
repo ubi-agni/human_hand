@@ -249,14 +249,19 @@
 		</link>
 	</xacro:macro>
 
+
 	<!-- HUMAN HAND MODEL -->
-	<xacro:macro name="human_hand" params="parent name useMimicTag left *origin">
+	<xacro:macro name="human_hand" params="parent name useMimicTag side:='' tactile_mapping:='' *origin">
+		<xacro:if value="${tactile_mapping not in ['', '-']}">
+			<xacro:property name="mapping" value="${load_yaml('../model/taxel.yaml')[tactile_mapping]}"/>
+			<!-- if side is not yet specified, try to fetch it from the mapping -->
+			<xacro:if value="${side not in ['left', 'right']}">
+				<xacro:property name="side" value="${mapping.get('handedness','right')}"/>
+			</xacro:if>
+		</xacro:if>
 
 		<!-- left/right hand model-->
-		<xacro:property name="reflect" value="1" />
-		<xacro:if value="${left}">
-			<xacro:property name="reflect" value="-1" />
-		</xacro:if>
+		<xacro:property name="reflect" value="${dict(right=1, left=-1)[side]}" />
 
 		<!-- PALM -->
 		<joint name="${name}_palm_joint" type="fixed" >
@@ -301,9 +306,10 @@
 
 
 		<!-- TACTILE MARKERS -->
-		<xacro:property name="mapping" value="${load_yaml('../model/taxel.yaml')[tactile_mapping]}"/>
-		<xacro:include filename="$(find human_hand_description)/model/${mapping['layout']}.urdf.xacro"/>
-		<xacro:tactile_glove name="${name}" reflect="${reflect}" tactMap="${mapping}"/>
+		<xacro:if value="${tactile_mapping not in ['', '-']}">
+			<xacro:include filename="$(find human_hand_description)/model/${mapping['layout']}.urdf.xacro"/>
+			<xacro:tactile_glove name="${name}" reflect="${reflect}" tactMap="${mapping}"/>
+		</xacro:if>
 	</xacro:macro>
 
 </robot>
