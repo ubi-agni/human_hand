@@ -13,8 +13,8 @@
 
 	<!-- a segment is composed of a joint and the attached link -->
 	<xacro:macro name="xacro:segment"
-	             params="prefix:=$|'' finger:=$ joint link parent reflect:=$ *origin *axis
-	                     synergy_weight:=None mesh:=1 use_synergy:=$">
+	             params="prefix:=^|'' finger:=^ joint link parent reflect:=^ *origin *axis
+	                     synergy_weight:=None mesh:=1 use_synergy:=^">
 		<xacro:property name="props" value="${joint_props[finger][joint]}"/>
 
 		<joint name="${prefix}${finger}_${joint}_joint" type="revolute">
@@ -51,7 +51,7 @@
 
 	<!-- FINGER MODEL -->
 	<xacro:macro name="finger"
-	             params="parent prefix:=$ finger reflect:=$ *origin
+	             params="parent prefix:=^ finger reflect:=^ *origin
 	                     joint_props:=${properties['joints']}">
 		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger]['proximal']}"/>
 		<xacro:property name="middle_len" value="${properties['link_lengths'][finger]['middle']}"/>
@@ -87,7 +87,7 @@
 
 	<!-- THUMB MODEL -->
 	<xacro:macro name="thumb"
-	             params="parent prefix:=$ finger:='thumb' reflect:=$ *origin
+	             params="parent prefix:=^ finger:='thumb' reflect:=^ *origin
 	                     joint_props:=${properties['joints']}">
 		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger]['proximal']}"/>
 		<xacro:property name="middle_len" value="${properties['link_lengths'][finger]['middle']}"/>

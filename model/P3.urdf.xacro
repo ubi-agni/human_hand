@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot name="tactile_glove_markers" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:macro name="taxel" params="prefix:=$ channel link mesh offset ns">
+	<xacro:macro name="taxel" params="prefix:=^ channel link mesh offset ns">
 		<xacro:if value="${channel >= 0}">
 			<tactile topic="TactileGlove" data="data[${channel}]" link="${prefix}${link}" ns="${ns}" xs="0 4095">
 				<geometry>
