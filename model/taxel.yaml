@@ -1,5 +1,5 @@
 P1:
-  layout: P1
+  layout: L1
   handedness: right
   idd: 6
   idi: 7
@@ -40,7 +40,7 @@ P1:
   tpo: 5
 
 P2:
-  layout: P1
+  layout: L1
   handedness: right
   bar: 14
   idd: 17
@@ -99,7 +99,7 @@ P2:
   tpo: 27
 
 P3l:
-  layout: P3
+  layout: L2
   handedness: left
   idd: 45
   idi: 19
@@ -162,7 +162,7 @@ P3l:
   tpo: 14
 
 P3r:
-  layout: P3
+  layout: L2
   handedness: right
   idd: 60
   idi: 1
@@ -223,3 +223,65 @@ P3r:
   tpi: 41
   tpm: 35
   tpo: 63
+  
+P4l:
+  layout: L3
+  handedness: left
+  tpo: 7
+  tpm: 0
+  tpi: 63
+  tdo: 5
+  tdm: 14
+  tdi: 51
+  tdd: 11
+  rp: 37
+  rmo: 41
+  rmm: 33
+  rmi: 42
+  rdo: 45
+  rdm: 43
+  rdi: 35
+  rdd: 34
+  ptop: 6
+  ptod: 12
+  ptmp: 48
+  ptmd: 10
+  ptip: 50
+  ptid: 52
+  pdr: 57
+  pdm: 9
+  pdlo: 59
+  pdl: 62
+  pdii: 3
+  pdi: 1
+  pcmp: 60
+  pcmd: 54
+  pcip: 58
+  pcim: 49
+  pcid: 55
+  mp: 38
+  mmo: 40
+  mmm: 39
+  mmi: 20
+  mdo: 32
+  mdm: 44
+  mdi: 18
+  mdd: 36
+  lpo: 53
+  lp: 19
+  lmo: 61
+  lmm: 47
+  lmi: 25
+  ldo: 56
+  ldm: 27
+  ldi: 30
+  ldd: 17
+  ipi: 2
+  ip: 29
+  imo: 16
+  imm: 31
+  imi: 8
+  ido: 26
+  idm: 24
+  idi: 13
+  idd: 28

@@ -4,7 +4,7 @@
 		<xacro:if value="${channel >= 0}">
 			<tactile topic="TactileGlove" data="data[${channel}]" link="${prefix}${link}" ns="${ns}" xs="0 4095">
 				<geometry>
-					<mesh filename="package://human_hand_description/model/meshes/taxels/${mesh}.stl"
+					<mesh filename="package://human_hand_description/model/meshes/taxels/L2/${mesh}.stl"
 					      scale="${0.00101*reflect} 0.00101 0.00101"/>
 				</geometry>
 				<origin xyz="${offset}"/>
@@ -62,7 +62,7 @@
 		<xacro:taxel ns="palm" link="palm_link" mesh="pcmp" channel="${tactMap.get('pcmp', -1)}" offset="0 -1e-3 0"/>
 		<xacro:taxel ns="palm" link="palm_link" mesh="pcmd" channel="${tactMap.get('pcmd', -1)}" offset="0 -1e-3 0"/>
 		<xacro:taxel ns="palm" link="palm_link" mesh="pcip" channel="${tactMap.get('pcip', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pcim" channel="${tactMap.get('pcim', -1)}" offset="0 -1e-3 0"/>n
+		<xacro:taxel ns="palm" link="palm_link" mesh="pcim" channel="${tactMap.get('pcim', -1)}" offset="0 -1e-3 0"/>
 		<xacro:taxel ns="palm" link="palm_link" mesh="pcid" channel="${tactMap.get('pcid', -1)}" offset="0 -1e-3 0"/>
 
 		<xacro:taxel ns="palm" link="palm_link" mesh="pi" channel="${tactMap.get('pi', -1)}" offset="0 -1e-3 0"/>
