@@ -1,88 +1,88 @@
 <?xml version="1.0"?>
 <robot name="tactile_glove_markers" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:macro name="taxel" params="prefix:=^ channel link mesh offset ns">
-		<xacro:if value="${channel >= 0}">
-		<tactile topic="TactileGlove" data="data[${channel}]" link="${prefix}${link}" ns="${ns}" xs="0 4095">
-			<geometry>
-				<mesh filename="package://human_hand_description/model/meshes/taxels/L1/${mesh}.stl"
-				      scale="${0.00101*reflect} 0.00101 0.00101"/>
-			</geometry>
-			<origin xyz="${offset}"/>
-		</tactile>
+	<xacro:macro name="taxel" params="prefix:=^ mesh idx offset">
+		<xacro:if value="${idx >= 0}">
+			<taxel idx="${idx}">
+				<geometry>
+					<mesh filename="package://human_hand_description/model/meshes/taxels/L1/${mesh}.stl"
+					      scale="${0.00101*reflect} 0.00101 0.00101"/>
+				</geometry>
+			</taxel>
 		</xacro:if>
 	</xacro:macro>
 
+	<xacro:macro name="tactile_glove_finger" params="prefix:=^ finger tactMap:=^">
+		<xacro:property name="F" value="${finger[0]}"/>
+		<sensor name="${prefix}${finger}_distal" update_rate="100" group="distal">
+			<parent link="${finger}_distal_link"/>
+			<tactile channel="tactile">
+				<xacro:taxel mesh="${F}dd" idx="${tactMap.get(F+'dd', -1)}" offset="0 0 1e-3"/>
+				<xacro:taxel mesh="${F}do" idx="${tactMap.get(F+'do', -1)}" offset="${-1e-3*reflect} 0 0"/>
+				<xacro:taxel mesh="${F}dm" idx="${tactMap.get(F+'dm', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="${F}di" idx="${tactMap.get(F+'di', -1)}" offset="${1e-3*reflect} 0 0"/>
+			</tactile>
+		</sensor>
+
+		<sensor name="${prefix}${finger}_middle" update_rate="100" group="middle">
+			<parent link="${finger}_middle_link"/>
+			<tactile channel="tactile">
+				<xacro:taxel mesh="${F}mo" idx="${tactMap.get(F+'mo', -1)}" offset="${-1e-3*reflect} 0 0"/>
+				<xacro:taxel mesh="${F}mm" idx="${tactMap.get(F+'mm', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="${F}mi" idx="${tactMap.get(F+'mi', -1)}" offset="${1e-3*reflect} 0 0"/>
+			</tactile>
+		</sensor>
+
+		<sensor name="${prefix}${finger}_proximal" update_rate="100" group="proximal">
+			<parent link="${finger}_proximal_link"/>
+			<tactile channel="tactile">
+				<xacro:taxel mesh="${F}p" idx="${tactMap.get(F+'p', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="${F}pi" idx="${tactMap.get(F+'pi', -1)}" offset="${1e-3*reflect} 0 0"/>
+				<xacro:taxel mesh="${F}po" idx="${tactMap.get(F+'po', -1)}" offset="${-1e-3*reflect} 0 0"/>
+			</tactile>
+		</sensor>
+	</xacro:macro>
+
 	<xacro:macro name="tactile_glove" params="prefix reflect:=1 tactMap">
-		<xacro:taxel ns="index" link="index_distal_link" mesh="idd" channel="${tactMap.get('idd', -1)}" offset="0 0 1e-3"/>
-		<xacro:taxel ns="index" link="index_distal_link" mesh="ido" channel="${tactMap.get('ido', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="index" link="index_distal_link" mesh="idm" channel="${tactMap.get('idm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="index" link="index_distal_link" mesh="idi" channel="${tactMap.get('idi', -1)}" offset="${1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="index" link="index_middle_link" mesh="imo" channel="${tactMap.get('imo', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="index" link="index_middle_link" mesh="imm" channel="${tactMap.get('imm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="index" link="index_middle_link" mesh="imi" channel="${tactMap.get('imi', -1)}" offset="${1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="index" link="index_proximal_link" mesh="ip" channel="${tactMap.get('ip', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="index" link="index_proximal_link" mesh="ipi" channel="${tactMap.get('ipi', -1)}" offset="${1e-3*reflect} 0 0"/>
+		<xacro:tactile_glove_finger finger="index"/>
+		<xacro:tactile_glove_finger finger="middle"/>
+		<xacro:tactile_glove_finger finger="ring"/>
+		<xacro:tactile_glove_finger finger="little"/>
+		<xacro:tactile_glove_finger finger="thumb"/>
 
-		<xacro:taxel ns="middle" link="middle_distal_link" mesh="mdd" channel="${tactMap.get('mdd', -1)}" offset="0 0 1e-3"/>
-		<xacro:taxel ns="middle" link="middle_distal_link" mesh="mdo" channel="${tactMap.get('mdo', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="middle" link="middle_distal_link" mesh="mdm" channel="${tactMap.get('mdm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="middle" link="middle_distal_link" mesh="mdi" channel="${tactMap.get('mdi', -1)}" offset="${1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="middle" link="middle_middle_link" mesh="mmo" channel="${tactMap.get('mmo', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="middle" link="middle_middle_link" mesh="mmm" channel="${tactMap.get('mmm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="middle" link="middle_middle_link" mesh="mmi" channel="${tactMap.get('mmi', -1)}" offset="${1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="middle" link="middle_proximal_link" mesh="mp" channel="${tactMap.get('mp', -1)}" offset="0 -1e-3 0"/>
+		<sensor name="thumb_base" update_rate="100" group="proximal">
+			<parent link="${prefix}thumb_proximal_link"/>
+			<tactile channel="tactile">
+				<xacro:taxel mesh="ptmp2" idx="${tactMap.get('ptop', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptmd2" idx="${tactMap.get('ptod', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptip2" idx="${tactMap.get('ptip', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptid2" idx="${tactMap.get('ptid', -1)}" offset="0 -1e-3 0"/>
+			</tactile>
+		</sensor>
 
-		<xacro:taxel ns="ring" link="ring_distal_link" mesh="rdd" channel="${tactMap.get('rdd', -1)}" offset="0 0 1e-3"/>
-		<xacro:taxel ns="ring" link="ring_distal_link" mesh="rdo" channel="${tactMap.get('rdo', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="ring" link="ring_distal_link" mesh="rdm" channel="${tactMap.get('rdm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="ring" link="ring_distal_link" mesh="rdi" channel="${tactMap.get('rdi', -1)}" offset="${1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="ring" link="ring_middle_link" mesh="rmo" channel="${tactMap.get('rmo', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="ring" link="ring_middle_link" mesh="rmm" channel="${tactMap.get('rmm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="ring" link="ring_middle_link" mesh="rmi" channel="${tactMap.get('rmi', -1)}" offset="${1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="ring" link="ring_proximal_link" mesh="rp" channel="${tactMap.get('rp', -1)}" offset="0 -1e-3 0"/>
+		<sensor name="palm" update_rate="100" group="palm">
+			<parent link="${prefix}palm_link"/>
+			<tactile channel="tactile">
+				<xacro:taxel mesh="pdlo" idx="${tactMap.get('po', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pdl" idx="${tactMap.get('pdl', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pdr" idx="${tactMap.get('pdr', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pdm" idx="${tactMap.get('pdm', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pdi" idx="${tactMap.get('pdi', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pdii" idx="${tactMap.get('pdii', -1)}" offset="0 -1e-3 0"/>
 
-		<xacro:taxel ns="little" link="little_distal_link" mesh="ldd" channel="${tactMap.get('ldd', -1)}" offset="0 0 1e-3"/>
-		<xacro:taxel ns="little" link="little_distal_link" mesh="ldo" channel="${tactMap.get('ldo', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="little" link="little_distal_link" mesh="ldm" channel="${tactMap.get('ldm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="little" link="little_distal_link" mesh="ldi" channel="${tactMap.get('ldi', -1)}" offset="${1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="little" link="little_middle_link" mesh="lmo" channel="${tactMap.get('lmo', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="little" link="little_middle_link" mesh="lmm" channel="${tactMap.get('lmm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="little" link="little_middle_link" mesh="lmi" channel="${tactMap.get('lmi', -1)}" offset="${1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="little" link="little_proximal_link" mesh="lpo" channel="${tactMap.get('lpo', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="little" link="little_proximal_link" mesh="lp" channel="${tactMap.get('lp', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pco" idx="${tactMap.get('po', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pcmp" idx="${tactMap.get('pcmp', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pcmd" idx="${tactMap.get('pcmd', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pcip" idx="${tactMap.get('pcip', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pcim" idx="${tactMap.get('pcim', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="pcid" idx="${tactMap.get('pcid', -1)}" offset="0 -1e-3 0"/>
 
-		<xacro:taxel ns="palm" link="palm_link" mesh="pdlo" channel="${tactMap.get('po', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pdl" channel="${tactMap.get('pdl', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pdr" channel="${tactMap.get('pdr', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pdm" channel="${tactMap.get('pdm', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pdi" channel="${tactMap.get('pdi', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pdii" channel="${tactMap.get('pdii', -1)}" offset="0 -1e-3 0"/>
-
-		<xacro:taxel ns="palm" link="palm_link" mesh="pco" channel="${tactMap.get('po', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pcmp" channel="${tactMap.get('pcmp', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pcmd" channel="${tactMap.get('pcmd', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pcip" channel="${tactMap.get('pcip', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pcim" channel="${tactMap.get('pcim', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="pcid" channel="${tactMap.get('pcid', -1)}" offset="0 -1e-3 0"/>
-
-		<xacro:taxel ns="palm" link="palm_link" mesh="ptop" channel="${tactMap.get('ptop', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="ptod" channel="${tactMap.get('ptod', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="ptmp" channel="${tactMap.get('ptop', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="ptmd" channel="${tactMap.get('ptod', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="ptip" channel="${tactMap.get('ptip', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="palm" link="palm_link" mesh="ptid" channel="${tactMap.get('ptid', -1)}" offset="0 -1e-3 0"/>
-
-		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="ptmp2" channel="${tactMap.get('ptop', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="ptmd2" channel="${tactMap.get('ptod', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="ptip2" channel="${tactMap.get('ptip', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_proximal_link" mesh="ptid2" channel="${tactMap.get('ptid', -1)}" offset="0 -1e-3 0"/>
-
-		<xacro:taxel ns="thumb" link="thumb_distal_link" mesh="tdd" channel="${tactMap.get('tdd', -1)}" offset="0 0 1e-3"/>
-		<xacro:taxel ns="thumb" link="thumb_distal_link" mesh="tdo" channel="${tactMap.get('tdo', -1)}" offset="0 1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_distal_link" mesh="tdm" channel="${tactMap.get('tdm', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="thumb" link="thumb_distal_link" mesh="tdi" channel="${tactMap.get('tdi', -1)}" offset="0 -1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_middle_link" mesh="tpo" channel="${tactMap.get('tpo', -1)}" offset="0 1e-3 0"/>
-		<xacro:taxel ns="thumb" link="thumb_middle_link" mesh="tpm" channel="${tactMap.get('tpm', -1)}" offset="${-1e-3*reflect} 0 0"/>
-		<xacro:taxel ns="thumb" link="thumb_middle_link" mesh="tpi" channel="${tactMap.get('tpi', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptop" idx="${tactMap.get('ptop', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptod" idx="${tactMap.get('ptod', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptmp" idx="${tactMap.get('ptop', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptmd" idx="${tactMap.get('ptod', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptip" idx="${tactMap.get('ptip', -1)}" offset="0 -1e-3 0"/>
+				<xacro:taxel mesh="ptid" idx="${tactMap.get('ptid', -1)}" offset="0 -1e-3 0"/>
+			</tactile>
+		</sensor>
 	</xacro:macro>
 </robot>
