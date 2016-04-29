@@ -1,0 +1,17 @@
+<!-- upload two human hands (in separate namespaces h1, h2) and start rviz -->
+<launch>
+	<include file="$(find human_hand_description)/launch/upload.launch" ns="h1">
+		<arg name="tactile_mapping" value="$(arg mapping1)"/>
+		<arg name="prefix" value="hand1_"/>
+	</include>
+	<include file="$(find human_hand_description)/launch/upload.launch" ns="h2">
+		<arg name="tactile_mapping" value="$(arg mapping2)"/>
+		<arg name="prefix" value="hand2_"/>
+	</include>
+	<node name="$(anon hand1_base_transform)" pkg="tf2_ros"
+	      type="static_transform_publisher" args="-0.05 0 0  0 0 0  world hand1_glove_base"/>
+	<node name="$(anon hand2_base_transform)" pkg="tf2_ros"
+	      type="static_transform_publisher" args="0.05 0 0  0 0 0  world hand2_glove_base"/>
+	<node name="rviz" pkg="rviz" type="rviz" respawn="false"
+	      args="-d $(find human_hand_description)/launch/twogloves.rviz" output="screen"/>
+</launch>

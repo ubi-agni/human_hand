@@ -2,15 +2,16 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="human_hand">
 
 	<!-- side can be left | right | '' | '-' (meaning, fetch from mapping) -->
+	<xacro:arg name="prefix" default=""/>
 	<xacro:arg name="side" default=""/>
 	<xacro:arg name="use_synergy" default="false"/>
 	<xacro:arg name="tactile_mapping" default=""/>
 
 	<xacro:include filename="../model/human_hand.urdf.xacro"/>
 
-	<link name="world"/>
+	<link name="$(arg prefix)glove_base"/>
 	<xacro:property name="side" value="$(arg side)"/>
-	<xacro:human_hand parent="world" prefix="${side + '_' if side not in ['','-'] else ''"
+	<xacro:human_hand parent="$(arg prefix)glove_base" prefix="$(arg prefix)"
 	                  side="$(arg side)" use_synergy="$(arg use_synergy)"
 	                  tactile_mapping="$(arg tactile_mapping)">
 		<origin xyz="0 0 0" rpy="0 0 0"/>
