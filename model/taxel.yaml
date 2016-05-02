@@ -36,8 +36,8 @@ P1:
   tdi: 1
   tdm: 2
   tdo: 3
-  tpi: 4
-  tpo: 5
+  tmi: 4
+  tmo: 5
 
 P2:
   layout: L1
@@ -95,8 +95,8 @@ P2:
   tdi: 25
   tdm: 21
   tdo: 23
-  tpi: 26
-  tpo: 27
+  tmi: 26
+  tmo: 27
 
 P3l:
   layout: L2
@@ -157,9 +157,9 @@ P3l:
   tdi: 0
   tdm: 9
   tdo: 12
-  tpi: 2
-  tpm: 31
-  tpo: 14
+  tmi: 2
+  tmm: 31
+  tmo: 14
 
 P3r:
   layout: L2
@@ -220,16 +220,16 @@ P3r:
   tdi: 39
   tdm: 44
   tdo: 36
-  tpi: 41
-  tpm: 35
-  tpo: 63
+  tmi: 41
+  tmm: 35
+  tmo: 63
   
 P4l:
   layout: L3
   handedness: left
-  tpo: 7
-  tpm: 0
-  tpi: 63
+  tmo: 7
+  tmm: 0
+  tmi: 63
   tdo: 5
   tdm: 14
   tdi: 51
