@@ -10,7 +10,7 @@
 	<arg name="side" default=""/>
 
 	<!-- load robot description -->
-	<param name="robot_description" command="$(find xacro)/xacro --inorder --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) prefix:=$(arg prefix) side:=$(arg side)"/>
+	<param name="robot_description" command="xacro --inorder --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) prefix:=$(arg prefix) side:=$(arg side)"/>
 
 	<param name="use_gui" value="$(arg gui)"/>
 	<node name="$(anon glove_jsp)" pkg="joint_state_publisher"
