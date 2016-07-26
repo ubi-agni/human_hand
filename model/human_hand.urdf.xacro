@@ -137,6 +137,8 @@
 			<xacro:if value="${side not in ['left', 'right']}">
 				<xacro:property name="side" value="${mapping.get('handedness','right')}"/>
 			</xacro:if>
+			<xacro:property name="layout" value="${mapping.get('layout','L3')}"/>
+			<xacro:property name="taxel_data" value="${load_yaml('../model/'+layout+side+'.yaml')}"/>
 		</xacro:if>
 
 		<!-- left/right hand model-->
@@ -203,7 +205,7 @@
 
 		<xacro:if value="${tactile_mapping not in ['', '-']}">
 			<xacro:include filename="$(find human_hand_description)/model/${mapping['layout']}.urdf.xacro"/>
-			<xacro:tactile_glove prefix="${prefix}" reflect="${reflect}" tactMap="${mapping}"/>
+			<xacro:tactile_glove prefix="${prefix}" reflect="${reflect}" tactMap="${mapping}" tactData="${taxel_data}"/>
 		</xacro:if>
 	</xacro:macro>
 

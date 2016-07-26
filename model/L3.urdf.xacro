@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <robot name="tactile_glove_markers" xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:macro name="taxel" params="prefix:=^ mesh idx">
+	<xacro:macro name="taxel" params="prefix:=^ tactData:=^ reflect:=^ mesh idx">
 		<xacro:if value="${idx >= 0}">
-			<taxel idx="${idx}">
+			<taxel idx="${idx}"
+			       xyz="${' '.join([str(v) for v in tactData['positions'][mesh]])}"
+			       rpy="${' '.join([str(v) for v in tactData['orientations'][mesh]])}">
 				<geometry>
 					<mesh filename="package://human_hand_description/model/meshes/taxels/L3/${mesh}.stl"
 					      scale="${0.00101*reflect} 0.00101 0.00101"/>
@@ -11,7 +13,7 @@
 		</xacro:if>
 	</xacro:macro>
 
-	<xacro:macro name="tactile_glove_finger" params="prefix:=^ finger tactMap:=^">
+	<xacro:macro name="tactile_glove_finger" params="prefix:=^ finger tactMap:=^ tactData:=^">
 		<xacro:property name="F" value="${finger[0]}"/>
 		<sensor name="${prefix}${finger}_distal" update_rate="100" group="distal">
 			<parent link="${finger}_distal_link"/>
@@ -42,7 +44,7 @@
 		</sensor>
 	</xacro:macro>
 
-	<xacro:macro name="tactile_glove" params="prefix reflect:=1 tactMap">
+	<xacro:macro name="tactile_glove" params="prefix reflect:=1 tactMap tactData">
 		<xacro:tactile_glove_finger finger="index"/>
 		<xacro:tactile_glove_finger finger="middle"/>
 		<xacro:tactile_glove_finger finger="ring"/>
