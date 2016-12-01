@@ -1,7 +1,7 @@
 Human Hand Model
 ===============
 
-This package is derived from the pisa_hand_description package
+This package is derived from the [pisa_hand_description](https://github.com/WEARHAP/hand-models/tree/master/pisa_hand_description) package
 
 The hand URDF model is loaded and displayed with this launch command
 
@@ -22,5 +22,6 @@ authors:
 
 original authors (Pisa):
 - r.nuti@hotmail.it
+- carlos@beta-robots.com
 - matteo.bianchi@centropiaggio.unipi.it
 - e.battaglia@centropiaggio.unipi.it
