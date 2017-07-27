@@ -6,12 +6,11 @@
 	<!-- use synergy with kinematics-based <mimic> tag -->
 	<arg name="use_synergy" default="true"/>
 	<arg name="tactile_mapping"/>
-	<arg name="tactile_display_mode" default="2"/>
 	<arg name="prefix" default=""/>
 	<arg name="side" default=""/>
 
 	<!-- load robot description -->
-	<param name="robot_description" command="$(find xacro)/xacro --inorder $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) prefix:=$(arg prefix) side:=$(arg side)"/>
+	<param name="robot_description" command="xacro --inorder --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) prefix:=$(arg prefix) side:=$(arg side)"/>
 
 	<param name="use_gui" value="$(arg gui)"/>
 	<node name="$(anon glove_jsp)" pkg="joint_state_publisher"
@@ -22,8 +21,4 @@
 
 	<node name="$(anon glove_rsp)" pkg="robot_state_publisher"
 	      type="state_publisher"/>
-	<node name="$(anon globe_mp)" pkg="tactile_marker_publisher"
-	      type="tactile_marker_publisher">
-		<param name="mode" value="$(arg tactile_display_mode)"/>
-	</node>
 </launch>

@@ -6,12 +6,16 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
-        - /Grid1
         - /RobotModel1
-        - /TF1/Frames1
-        - /TF1/Tree1
-        - /Axes1
-        - /MarkerArray1
+        - /Tactile State Display1
+        - /Tactile State Display1/sensors1
+        - /Tactile State Display1/sensors1/middle1/index_middle1
+        - /Tactile State Display1/sensors1/middle1/little_middle1
+        - /Tactile State Display1/sensors1/middle1/middle_middle1
+        - /Tactile State Display1/sensors1/middle1/ring_middle1
+        - /Tactile State Display1/sensors1/proximal1/ring_proximal1
+        - /Tactile State Display1/sensors1/proximal1/thumb_base1
+        - /Tactile State Display1/sensors1/proximal1/thumb_proximal1
       Splitter Ratio: 0.610801
     Tree Height: 833
   - Class: rviz/Selection
@@ -64,258 +68,223 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        left_hand_index_distal_link:
+        dummy_synergy_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        glove_base:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        index_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_index_knuckle_link:
+        index_knuckle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        left_hand_index_middle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        left_hand_index_proximal_link:
+        index_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_invisible_wire_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_hand_little_distal_link:
+        index_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_little_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_hand_little_middle_link:
+        little_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_little_proximal_link:
+        little_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        little_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_middle_distal_link:
+        little_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_middle_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_hand_middle_middle_link:
+        middle_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_middle_proximal_link:
+        middle_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        middle_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_palm_link:
+        middle_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_ring_distal_link:
+        palm_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_ring_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_hand_ring_middle_link:
+        ring_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_ring_proximal_link:
+        ring_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        ring_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_thumb_distal_link:
+        ring_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_thumb_fake_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        left_hand_thumb_knuckle_link:
+        thumb_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        left_hand_thumb_proximal_link:
+        thumb_knuckle_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        thumb_middle_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_hand_index_distal_link:
+        thumb_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        right_hand_index_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_hand_index_middle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_index_proximal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_invisible_wire_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_hand_little_distal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_little_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_hand_little_middle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_little_proximal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_middle_distal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_middle_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_hand_middle_middle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_middle_proximal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_palm_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_ring_distal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_ring_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_hand_ring_middle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_ring_proximal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_thumb_distal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_thumb_fake_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        right_hand_thumb_knuckle_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        right_hand_thumb_proximal_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        world:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
       Update Interval: 0
       Value: true
       Visual Enabled: true
-    - Class: rviz/TF
-      Enabled: false
-      Frame Timeout: 15
-      Frames:
-        All Enabled: false
-      Marker Scale: 0.15
-      Name: TF
-      Show Arrows: true
-      Show Axes: true
-      Show Names: false
-      Tree:
-        {}
-      Update Interval: 0
-      Value: false
-    - Class: rviz/Axes
+    - Class: rviz_tactile_plugins/Tactile State Display
       Enabled: true
-      Length: 0.02
-      Name: Axes
-      Radius: 0.002
-      Reference Frame: <Fixed Frame>
+      Name: Tactile State Display
+      TF Prefix: ""
       Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /tactile_markers
-      Name: MarkerArray
-      Namespaces:
-        index: true
-        little: true
-        middle: true
-        palm: true
-        ring: true
-        thumb: true
-      Queue Size: 1
-      Value: true
+      display mode:
+        Value: rawCurrent
+        mean lambda: 0.7
+        range lambda: 0.9995
+        release decay: 0.05
+      display timeout: 1
+      robot description: robot_description
+      sensors:
+        Value: true
+        distal:
+          Value: true
+          index_distal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          little_distal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          middle_distal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          ring_distal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          thumb_distal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+        middle:
+          Value: true
+          index_middle:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          little_middle:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          middle_middle:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          ring_middle:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+        palm:
+          Value: true
+          palm:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+        proximal:
+          Value: true
+          index_proximal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          little_proximal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          middle_proximal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          ring_proximal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          thumb_base:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+          thumb_proximal:
+            Value: true
+            data range:
+              maximum: 4095
+              minimum: 0
+      topic: /TactileGlove/calibrated
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -340,7 +309,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.570101
+      Distance: 0.452025
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -352,10 +321,10 @@ Visualization Manager:
         Z: 0.126173
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: -0.0202035
+      Pitch: 0.0397969
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.63356
+      Yaw: 4.87856
     Saved: ~
 Window Geometry:
   Displays:
@@ -363,7 +332,7 @@ Window Geometry:
   Height: 1036
   Hide Left Dock: false
   Hide Right Dock: true
-  QMainWindow State: 000000ff00000000fd00000004000000000000021b000003d3fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006700fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000001b000003d3000000e300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000025afc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000025a000000b300fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000051500000042fc0100000002fb0000000800540069006d00650000000000000005150000023900fffffffb0000000800540069006d006501000000000000045000000000000000000000055f000003d300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000021b000003d3fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006700fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000001b000003d3000000e300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000025afc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000025a000000b300fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000051500000042fc0100000002fb0000000800540069006d00650000000000000005150000023900fffffffb0000000800540069006d0065010000000000000450000000000000000000000555000003d300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -372,6 +341,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: true
-  Width: 1920
+  Width: 1910
   X: 0
-  Y: 25
+  Y: 63
