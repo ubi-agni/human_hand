@@ -1,6 +1,7 @@
 P1:
   layout: L1
   handedness: right
+  taxeldata_file: ""  # L1 has no taxeldata file
   idd: 6
   idi: 7
   idm: 8
@@ -42,6 +43,7 @@ P1:
 P2:
   layout: L1
   handedness: right
+  taxeldata_file: ""  # L1 has no taxeldata file
   bar: 14
   idd: 17
   idi: 18

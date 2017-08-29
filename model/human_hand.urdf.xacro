@@ -138,7 +138,10 @@
 				<xacro:property name="side" value="${mapping.get('handedness','right')}"/>
 			</xacro:if>
 			<xacro:property name="layout" value="${mapping.get('layout','L3')}"/>
-			<xacro:property name="taxel_data" value="${load_yaml('../model/'+layout+side+'.yaml')}"/>
+			<xacro:property name="taxeldata_file" value="${mapping.get('taxeldata_file','../model/'+layout+side+'.yaml')}"/>
+			<xacro:if value="${taxeldata_file not in ['', '-']}">
+				<xacro:property name="taxel_data" value="${load_yaml(taxeldata_file)}"/>
+			</xacro:if>
 		</xacro:if>
 
 		<!-- left/right hand model-->
