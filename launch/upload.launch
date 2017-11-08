@@ -2,6 +2,7 @@
      start a joint_state_publisher, a robot_state_publisher, and a tactile_marker publisher -->
 <launch>
 	<arg name="gui" default="true" />
+	<arg name="jsp" default="true"/>
 
 	<!-- use synergy with kinematics-based <mimic> tag -->
 	<arg name="use_synergy" default="true"/>
@@ -12,12 +13,14 @@
 	<!-- load robot description -->
 	<param name="robot_description" command="xacro --inorder --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) prefix:=$(arg prefix) side:=$(arg side)"/>
 
-	<param name="use_gui" value="$(arg gui)"/>
-	<node name="$(anon glove_jsp)" pkg="joint_state_publisher"
-	      type="joint_state_publisher" >
-		<!-- listen to synergy/joint_states topic for external synergy joint provider -->
-		<rosparam if="$(arg use_synergy)" param="source_list">["synergy/joint_states"]</rosparam>
-	</node>
+	<group if="$(arg jsp)">
+		<param name="use_gui" value="$(arg gui)"/>
+		<node name="$(anon glove_jsp)" pkg="joint_state_publisher"
+		      type="joint_state_publisher" >
+			<!-- listen to synergy/joint_states topic for external synergy joint provider -->
+			<rosparam if="$(arg use_synergy)" param="source_list">["synergy/joint_states"]</rosparam>
+		</node>
+	</group>
 
 	<node name="$(anon glove_rsp)" pkg="robot_state_publisher"
 	      type="state_publisher"/>
