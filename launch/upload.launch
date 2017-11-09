@@ -23,5 +23,5 @@
 	</group>
 
 	<node name="$(anon glove_rsp)" pkg="robot_state_publisher"
-	      type="state_publisher"/>
+	      type="robot_state_publisher"/>
 </launch>

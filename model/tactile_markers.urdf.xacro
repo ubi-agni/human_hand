@@ -24,7 +24,8 @@
 		</xacro:if>
 	</xacro:macro>
 
-	<xacro:macro name="tactile_glove_finger" params="prefix:=^ finger tactMap:=^ tactData:=^|'-'">
+	<xacro:macro name="tactile_glove_finger"
+	             params="prefix:=^ finger tactMap:=^ tactData:=^|'-'">
 		<xacro:property name="layout" value="${tactMap['layout']}"/>
 		<xacro:property name="F" value="${finger[0]}"/>
 		<sensor name="${prefix}${finger}_distal" update_rate="100" group="distal">

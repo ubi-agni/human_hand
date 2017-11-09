@@ -13,14 +13,15 @@
 
 	<!-- a segment is composed of a joint and the attached link -->
 	<xacro:macro name="xacro:segment"
-	             params="prefix:=^|'' finger:=^ joint link parent reflect:=^ *origin *axis
+	             params="link_prefix:=^|'' joint_prefix:=^|''
+	                     finger:=^ joint link parent reflect:=^ *origin *axis
 	                     synergy_weight:=None mesh:=1 use_synergy:=^">
 		<xacro:property name="props" value="${joint_props[finger][joint]}"/>
 
-		<joint name="${prefix}${finger}_${joint}_joint" type="revolute">
+		<joint name="${joint_prefix}${finger}_${joint}_joint" type="revolute">
 			<xacro:insert_block name="origin"/>
-			<parent link="${parent}"/>
-			<child link="${prefix}${finger}_${link}_link"/>
+			<parent link="${link_prefix}${parent}"/>
+			<child link="${link_prefix}${finger}_${link}_link"/>
 			<xacro:insert_block name="axis"/>
 			<limit lower="${props['bounds'][0]*pi/180}" upper="${props['bounds'][1]*pi/180}"
 			       effort="${props['effort']}" velocity="${props['velocity']}"/>
@@ -33,7 +34,7 @@
 				       multiplier="${synergy_weight*(props['bounds'][1] - props['bounds'][0])*pi/180}"/>
 			</xacro:if>
 		</joint>
-		<link name="${prefix}${finger}_${link}_link">
+		<link name="${link_prefix}${finger}_${link}_link">
 			<xacro:if value="${mesh != 0}">
 				<visual>
 					<geometry>
@@ -51,8 +52,8 @@
 
 	<!-- FINGER MODEL -->
 	<xacro:macro name="finger"
-	             params="parent prefix:=^ finger reflect:=^ *origin
-	                     joint_props:=${properties['joints']}">
+	             params="parent link_prefix:=^|'' joint_prefix:=^|''
+	                     finger reflect:=^ *origin joint_props:=${properties['joints']}">
 		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger]['proximal']}"/>
 		<xacro:property name="middle_len" value="${properties['link_lengths'][finger]['middle']}"/>
 
@@ -65,21 +66,21 @@
 
 		<!-- PROXIMAL PHALANGE -->
 
-		<xacro:segment joint="proximal" link="proximal" parent="${prefix}${finger}_knuckle_link">
+		<xacro:segment joint="proximal" link="proximal" parent="${finger}_knuckle_link">
 			<origin xyz="0 0 0" rpy="0 0 0"/>
 			<axis xyz="1 0 0" />
 		</xacro:segment>
 
 		<!-- MIDDLE PHALANGE -->
 
-		<xacro:segment joint="middle" link="middle" parent="${prefix}${finger}_proximal_link">
+		<xacro:segment joint="middle" link="middle" parent="${finger}_proximal_link">
 			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0"/>
 			<axis xyz="1 0 0" />
 		</xacro:segment>
 
 		<!-- DISTAL PHALANGE -->
 
-		<xacro:segment joint="distal" link="distal" parent="${prefix}${finger}_middle_link">
+		<xacro:segment joint="distal" link="distal" parent="${finger}_middle_link">
 			<origin xyz="0 0 ${middle_len}" rpy="0 0 0"/>
 			<axis xyz="1 0 0" />
 		</xacro:segment>
@@ -87,8 +88,8 @@
 
 	<!-- THUMB MODEL -->
 	<xacro:macro name="thumb"
-	             params="parent prefix:=^ finger:='thumb' reflect:=^ *origin
-	                     joint_props:=${properties['joints']}">
+	             params="parent link_prefix:=^|'' joint_prefix:=^|''
+	                     finger:='thumb' reflect:=^ *origin joint_props:=${properties['joints']}">
 		<xacro:property name="proximal_len" value="${properties['link_lengths'][finger]['proximal']}"/>
 		<xacro:property name="middle_len" value="${properties['link_lengths'][finger]['middle']}"/>
 
@@ -102,21 +103,21 @@
 
 		<!-- PROXIMAL PHALANGE -->
 
-		<xacro:segment joint="proximal" link="proximal" parent="${prefix}${finger}_knuckle_link">
+		<xacro:segment joint="proximal" link="proximal" parent="${finger}_knuckle_link">
 			<origin xyz="0 0 0" rpy="0 0 0" />
 			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
 
 		<!-- MIDDLE PHALANGE -->
 
-		<xacro:segment joint="middle" link="middle" parent="${prefix}${finger}_proximal_link">
+		<xacro:segment joint="middle" link="middle" parent="${finger}_proximal_link">
 			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0"/>
 			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
 
 		<!-- DISTAL PHALANGE -->
 
-		<xacro:segment joint="distal" link="distal" parent="${prefix}${finger}_middle_link">
+		<xacro:segment joint="distal" link="distal" parent="${finger}_middle_link">
 			<origin xyz="0 0 ${middle_len}" rpy="0 0 0"/>
 			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
@@ -125,7 +126,8 @@
 
 	<!-- HUMAN HAND MODEL -->
 	<xacro:macro name="human_hand"
-	             params="parent prefix:='' use_synergy side:='' tactile_mapping:='' *origin">
+	             params="parent link_prefix:=^|'' joint_prefix:=^|''
+	                     use_synergy side:='' tactile_mapping:='' *origin">
 		<!-- load kinematics properties -->
 		<xacro:property name="properties" value="${load_yaml('../model/properties.yaml')}"/>
 		<xacro:property name="synergies" value="${properties['synergies']}"/>
@@ -152,13 +154,13 @@
 
 		<!-- PALM -->
 
-		<joint name="${prefix}palm_joint" type="fixed" >
+		<joint name="${joint_prefix}palm_joint" type="fixed" >
 			<xacro:insert_block name="origin"/>
 			<parent link="${parent}" />
-			<child link="${prefix}palm_link" />
+			<child link="${link_prefix}palm_link" />
 		</joint>
 
-		<link name="${prefix}palm_link">
+		<link name="${link_prefix}palm_link">
 			<visual>
 				<geometry>
 					<mesh filename="package://human_hand_description/model/meshes/palm.stl"
@@ -169,12 +171,12 @@
 		</link>
 
 		<xacro:if value="${use_synergy}">
-			<xacro:property name="synergy_joint" value="${prefix}synergy_joint"/>
+			<xacro:property name="synergy_joint" value="${joint_prefix}synergy_joint"/>
 			<!-- SYNERGY JOINT -->
 
 			<joint name="${synergy_joint}" type="revolute">
-				<parent link="${prefix}palm_link" />
-				<child link="${prefix}dummy_synergy_link"/>
+				<parent link="${link_prefix}palm_link" />
+				<child link="${link_prefix}dummy_synergy_link"/>
 				<axis xyz="0 0 1" />
 
 				<xacro:property name="props" value="${properties['joints']['synergy']}"/>
@@ -182,28 +184,28 @@
 				       effort="${props['effort']}" velocity="${props['velocity']}"/>
 				<dynamics damping="${props['damping']}" friction="${props['friction']}"/>
 			</joint>
-			<link name="${prefix}dummy_synergy_link"/>
+			<link name="${link_prefix}dummy_synergy_link"/>
 		</xacro:if>
 
 		<!-- THUMB AND FINGERS -->
 
-		<xacro:thumb parent="${prefix}palm_link" finger="thumb">
+		<xacro:thumb parent="palm_link" finger="thumb">
 			<origin xyz="${0.02475*reflect} -0.0125 0.0125" rpy="0.0 ${0.6240*reflect} 0"/>
 		</xacro:thumb>
 
-		<xacro:finger parent="${prefix}palm_link" finger="index">
+		<xacro:finger parent="palm_link" finger="index">
 			<origin xyz="${0.02175*reflect} -0.002 0.099" rpy="0 0 0"/>
 		</xacro:finger>
 
-		<xacro:finger parent="${prefix}palm_link" finger="middle">
+		<xacro:finger parent="palm_link" finger="middle">
 			<origin xyz="${-0.002*reflect} 0.0015 0.0955" rpy="0 0 0"/>
 		</xacro:finger>
 
-		<xacro:finger parent="${prefix}palm_link" finger="ring">
+		<xacro:finger parent="palm_link" finger="ring">
 			<origin xyz="${-0.02225*reflect} 0.0010 0.090" rpy="0 0 0"/>
 		</xacro:finger>
 
-		<xacro:finger parent="${prefix}palm_link" finger="little">
+		<xacro:finger parent="palm_link" finger="little">
 			<origin xyz="${-0.04175*reflect} -0.003 0.079" rpy="0 0 0"/>
 		</xacro:finger>
 
@@ -211,7 +213,8 @@
 
 		<xacro:if value="${mapping is not None}">
 			<xacro:include filename="$(find human_hand_description)/model/tactile_markers.urdf.xacro"/>
-			<xacro:tactile_glove prefix="${prefix}" reflect="${reflect}" tactMap="${mapping}" tactData="${taxel_data}"/>
+			<xacro:tactile_glove prefix="${link_prefix}" reflect="${reflect}"
+			                     tactMap="${mapping}" tactData="${taxel_data}"/>
 		</xacro:if>
 	</xacro:macro>
 

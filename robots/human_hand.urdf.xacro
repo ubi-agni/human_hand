@@ -2,7 +2,11 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="human_hand">
 
 	<!-- side can be left | right | '' | '-' (meaning, fetch from mapping) -->
-	<xacro:arg name="prefix" default=""/>
+	<xacro:arg name="prefix" default=""/> <!-- prefix serves as default for link_prefix -->
+	<!-- link prefix is needed for multiple hands within the TF tree -->
+	<xacro:arg name="link_prefix" default="$(arg prefix)"/>
+	<!-- joint_prefix is only needed when combining multiple hands into a single robot -->
+	<xacro:arg name="joint_prefix" default=""/>
 	<xacro:arg name="side" default=""/>
 	<xacro:arg name="use_synergy" default="false"/>
 	<xacro:arg name="tactile_mapping" default=""/>
@@ -11,7 +15,8 @@
 
 	<link name="$(arg prefix)glove_base"/>
 	<xacro:property name="side" value="$(arg side)"/>
-	<xacro:human_hand parent="$(arg prefix)glove_base" prefix="$(arg prefix)"
+	<xacro:human_hand parent="$(arg prefix)glove_base"
+	                  link_prefix="$(arg link_prefix)" joint_prefix="$(arg joint_prefix)"
 	                  side="$(arg side)" use_synergy="$(arg use_synergy)"
 	                  tactile_mapping="$(arg tactile_mapping)">
 		<origin xyz="0 0 0" rpy="0 0 0"/>
