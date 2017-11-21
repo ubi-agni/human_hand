@@ -18,6 +18,7 @@
 	                     synergy_weight:=None mesh:=1 use_synergy:=^">
 		<xacro:property name="props" value="${joint_props[finger][joint]}"/>
 
+
 		<joint name="${joint_prefix}${finger}_${joint}_joint" type="revolute">
 			<xacro:insert_block name="origin"/>
 			<parent link="${link_prefix}${parent}"/>
@@ -127,7 +128,7 @@
 	<!-- HUMAN HAND MODEL -->
 	<xacro:macro name="human_hand"
 	             params="parent link_prefix:=^|'' joint_prefix:=^|''
-	                     use_synergy side:='' tactile_mapping:='' *origin">
+	                     use_synergy side:='' tactile_mapping:='' tactile_channel:='tactile glove' *origin">
 		<!-- load kinematics properties -->
 		<xacro:property name="properties" value="${load_yaml('../model/properties.yaml')}"/>
 		<xacro:property name="synergies" value="${properties['synergies']}"/>
@@ -214,7 +215,7 @@
 		<xacro:if value="${mapping is not None}">
 			<xacro:include filename="$(find human_hand_description)/model/tactile_markers.urdf.xacro"/>
 			<xacro:tactile_glove prefix="${link_prefix}" reflect="${reflect}"
-			                     tactMap="${mapping}" tactData="${taxel_data}"/>
+			                     tactMap="${mapping}" tactData="${taxel_data}" channel="${tactile_channel}"/>
 		</xacro:if>
 	</xacro:macro>
 

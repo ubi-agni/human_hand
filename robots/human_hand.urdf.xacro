@@ -10,6 +10,7 @@
 	<xacro:arg name="side" default=""/>
 	<xacro:arg name="use_synergy" default="false"/>
 	<xacro:arg name="tactile_mapping" default=""/>
+	<xacro:arg name="tactile_channel" default="tactile glove"/>
 
 	<xacro:include filename="../model/human_hand.urdf.xacro"/>
 
@@ -18,7 +19,8 @@
 	<xacro:human_hand parent="$(arg prefix)glove_base"
 	                  link_prefix="$(arg link_prefix)" joint_prefix="$(arg joint_prefix)"
 	                  side="$(arg side)" use_synergy="$(arg use_synergy)"
-	                  tactile_mapping="$(arg tactile_mapping)">
+	                  tactile_mapping="$(arg tactile_mapping)"
+	                  tactile_channel="'$(arg tactile_channel)'">
 		<origin xyz="0 0 0" rpy="0 0 0"/>
 	</xacro:human_hand>
 

@@ -25,12 +25,12 @@
 	</xacro:macro>
 
 	<xacro:macro name="tactile_glove_finger"
-	             params="prefix:=^ finger tactMap:=^ tactData:=^|'-'">
+	             params="prefix:=^ finger tactMap:=^ tactData:=^|'-' channel:=^|'tactile glove'">
 		<xacro:property name="layout" value="${tactMap['layout']}"/>
 		<xacro:property name="F" value="${finger[0]}"/>
 		<sensor name="${prefix}${finger}_distal" update_rate="100" group="distal">
 			<parent link="${prefix}${finger}_distal_link"/>
-			<tactile channel="tactile glove">
+			<tactile channel="${channel}">
 				<xacro:taxel mesh="${F}dd" idx="${tactMap.get(F+'dd', -1)}"/>
 				<xacro:taxel mesh="${F}do" idx="${tactMap.get(F+'do', -1)}"/>
 				<xacro:taxel mesh="${F}dm" idx="${tactMap.get(F+'dm', -1)}"/>
@@ -40,7 +40,7 @@
 
 		<sensor name="${prefix}${finger}_middle" update_rate="100" group="middle">
 			<parent link="${prefix}${finger}_middle_link"/>
-			<tactile channel="tactile glove">
+			<tactile channel="${channel}">
 				<xacro:taxel mesh="${F}mo" idx="${tactMap.get(F+'mo', -1)}"/>
 				<xacro:taxel mesh="${F}mm" idx="${tactMap.get(F+'mm', -1)}"/>
 				<xacro:taxel mesh="${F}mi" idx="${tactMap.get(F+'mi', -1)}"/>
@@ -49,7 +49,7 @@
 
 		<sensor name="${prefix}${finger}_proximal" update_rate="100" group="proximal">
 			<parent link="${prefix}${finger}_proximal_link"/>
-			<tactile channel="tactile glove">
+			<tactile channel="${channel}">
 				<xacro:taxel mesh="${F}p" idx="${tactMap.get(F+'p', -1)}"/>
 				<xacro:taxel mesh="${F}pi" idx="${tactMap.get(F+'pi', -1)}"/>
 				<xacro:taxel mesh="${F}po" idx="${tactMap.get(F+'po', -1)}"/>
@@ -57,7 +57,7 @@
 		</sensor>
 	</xacro:macro>
 
-	<xacro:macro name="tactile_glove" params="prefix reflect:=1 tactMap tactData">
+	<xacro:macro name="tactile_glove" params="prefix reflect:=1 tactMap tactData channel:='tactile glove'">
 		<xacro:tactile_glove_finger finger="index"/>
 		<xacro:tactile_glove_finger finger="middle"/>
 		<xacro:tactile_glove_finger finger="ring"/>
@@ -66,7 +66,7 @@
 
 		<sensor name="${prefix}thumb_base" update_rate="100" group="proximal">
 			<parent link="${prefix}thumb_proximal_link"/>
-			<tactile channel="tactile glove">
+			<tactile channel="${channel}">
 				<xacro:taxel mesh="ptmp2" idx="${tactMap.get('ptop', -1)}"/>
 				<xacro:taxel mesh="ptmp2" idx="${tactMap.get('ptmp', -1)}"/>
 				<xacro:taxel mesh="ptmd2" idx="${tactMap.get('ptod', -1)}"/>
@@ -78,7 +78,7 @@
 
 		<sensor name="${prefix}palm" update_rate="100" group="palm">
 			<parent link="${prefix}palm_link"/>
-			<tactile channel="tactile glove">
+			<tactile channel="${channel}">
 				<xacro:taxel mesh="pdlo" idx="${tactMap.get('po', -1)}"/>
 				<xacro:taxel mesh="pdlo" idx="${tactMap.get('pdlo', -1)}"/>
 				<xacro:taxel mesh="pdl" idx="${tactMap.get('pdl', -1)}"/>
