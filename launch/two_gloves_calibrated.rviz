@@ -370,7 +370,7 @@ Visualization Manager:
           thumb_base:
             Value: true
             data range: ~
-      topic: /h2/TactileGlove
+      topic: /h2/TactileGlove/calibrated
     - Class: rviz_tactile_plugins/Tactile State Display
       Enabled: true
       Name: Tactile State Display
@@ -441,7 +441,7 @@ Visualization Manager:
           thumb_base:
             Value: true
             data range: ~
-      topic: /h1/TactileGlove
+      topic: /h1/TactileGlove/calibrated
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48

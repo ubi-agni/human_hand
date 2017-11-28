@@ -9,13 +9,25 @@ Panels:
         - /RobotModel1
         - /Tactile State Display1
         - /Tactile State Display1/sensors1
+        - /Tactile State Display1/sensors1/distal1/index_distal1/data range1
+        - /Tactile State Display1/sensors1/distal1/little_distal1
+        - /Tactile State Display1/sensors1/distal1/middle_distal1
+        - /Tactile State Display1/sensors1/distal1/ring_distal1
+        - /Tactile State Display1/sensors1/distal1/thumb_distal1
         - /Tactile State Display1/sensors1/middle1/index_middle1
         - /Tactile State Display1/sensors1/middle1/little_middle1
         - /Tactile State Display1/sensors1/middle1/middle_middle1
         - /Tactile State Display1/sensors1/middle1/ring_middle1
+        - /Tactile State Display1/sensors1/middle1/thumb_middle1
+        - /Tactile State Display1/sensors1/proximal1/index_proximal1
+        - /Tactile State Display1/sensors1/proximal1/little_proximal1
+        - /Tactile State Display1/sensors1/proximal1/middle_proximal1
         - /Tactile State Display1/sensors1/proximal1/ring_proximal1
         - /Tactile State Display1/sensors1/proximal1/thumb_base1
-        - /Tactile State Display1/sensors1/proximal1/thumb_proximal1
+        - /Tactile State Display1/sensors1/palm1
+        - /Tactile State Display1/sensors1/palm1/palm1
+        - /Tactile Contact Display1
+        - /Tactile Contact Display1/Status1
       Splitter Ratio: 0.610801
     Tree Height: 833
   - Class: rviz/Selection
@@ -201,90 +213,106 @@ Visualization Manager:
           index_distal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           little_distal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           middle_distal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           ring_distal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           thumb_distal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
         middle:
           Value: true
           index_middle:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           little_middle:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           middle_middle:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           ring_middle:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
+              minimum: 0
+          thumb_middle:
+            Value: true
+            data range:
+              maximum: 1.0
               minimum: 0
         palm:
           Value: true
           palm:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
         proximal:
           Value: true
           index_proximal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           little_proximal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           middle_proximal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           ring_proximal:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
           thumb_base:
             Value: true
             data range:
-              maximum: 4095
+              maximum: 1.0
               minimum: 0
-          thumb_proximal:
-            Value: true
-            data range:
-              maximum: 4095
-              minimum: 0
-      topic: /TactileGlove
+      topic: /TactileGlove/calibrated
+    - Alpha: 1
+      Class: rviz_tactile_plugins/Tactile Contact Display
+      Display timeout: 1
+      Display wrench in contact frame?: true
+      Enabled: true
+      Force Color: 204; 51; 51
+      Name: Tactile Contact Display
+      Overall Scale:
+        Arrow Width: 1
+        Force Arrow Scale: 1
+        Torque Arrow Scale: 1
+        Value: 0.02
+      TF Prefix: ""
+      Topic: /tactile_contact_states
+      Torque Color: 204; 204; 51
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -309,7 +337,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.452025
+      Distance: 0.677304
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
@@ -321,10 +349,10 @@ Visualization Manager:
         Z: 0.126173
       Name: Current View
       Near Clip Distance: 0.01
-      Pitch: 0.0397969
+      Pitch: 0.244797
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.87856
+      Yaw: 5.08356
     Saved: ~
 Window Geometry:
   Displays:
@@ -332,7 +360,7 @@ Window Geometry:
   Height: 1036
   Hide Left Dock: false
   Hide Right Dock: true
-  QMainWindow State: 000000ff00000000fd00000004000000000000021b000003d3fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006700fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000001b000003d3000000e300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000025afc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000025a000000b300fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000051500000042fc0100000002fb0000000800540069006d00650000000000000005150000023900fffffffb0000000800540069006d0065010000000000000450000000000000000000000555000003d300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000021b000003d3fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006700fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000001b000003d3000000e300fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f0000025afc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a0056006900650077007300000000280000025a000000b300fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000051500000042fc0100000002fb0000000800540069006d00650000000000000005150000023a00fffffffb0000000800540069006d0065010000000000000450000000000000000000000555000003d300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -342,5 +370,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1910
-  X: 0
-  Y: 63
+  X: 1974
+  Y: 8

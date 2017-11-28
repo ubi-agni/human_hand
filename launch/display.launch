@@ -1,10 +1,17 @@
 <!-- upload a single human hand and start rviz -->
 <launch>
+	<arg name="calibrated" default="1"/>
 	<include file="$(find human_hand_description)/launch/upload.launch">
 		<arg name="tactile_mapping" value="$(arg tactile_mapping)"/>
 	</include>
 	<node name="$(anon glove_base_transform)" pkg="tf2_ros"
 	      type="static_transform_publisher" args="0 0 0  0 0 0  world glove_base"/>
-	<node name="rviz" pkg="rviz" type="rviz" respawn="false"
-	      args="-d $(find human_hand_description)/launch/display.rviz" output="screen"/>
+	<group if="$(arg calibrated)">
+		<node name="rviz" pkg="rviz" type="rviz" respawn="false"
+		      args="-d $(find human_hand_description)/launch/display_calibrated.rviz" output="screen"/>
+	</group>
+	<group unless="$(arg calibrated)">
+		<node name="rviz" pkg="rviz" type="rviz" respawn="false"
+		      args="-d $(find human_hand_description)/launch/display.rviz" output="screen"/>
+	</group>
 </launch>
