@@ -1,9 +1,12 @@
 <!-- upload two human hands (in separate namespaces h1, h2) and start rviz -->
 <launch>
+	<arg name="channel1" default="tactile glove"/>
+	<arg name="channel2" default="tactile glove"/>
 	<group ns="h1">
 		<param name="tf_prefix" type="string" value="h1"/>
 		<include file="$(find human_hand_description)/launch/upload.launch">
 			<arg name="tactile_mapping" value="$(arg mapping1)"/>
+			<arg name="tactile_channel" value="$(arg channel1)"/>
 		</include>
 		<node name="$(anon hand_base_transform)" pkg="tf2_ros"
 		      type="static_transform_publisher" args="-0.05 0 0  0 0 0  world h1/glove_base"/>
@@ -13,6 +16,7 @@
 		<param name="tf_prefix" type="string" value="h2"/>
 		<include file="$(find human_hand_description)/launch/upload.launch">
 			<arg name="tactile_mapping" value="$(arg mapping2)"/>
+			<arg name="tactile_channel" value="$(arg channel2)"/>
 		</include>
 		<node name="$(anon hand_base_transform)" pkg="tf2_ros"
 		      type="static_transform_publisher" args="0.05 0 0  0 0 0  world h2/glove_base"/>
