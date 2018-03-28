@@ -15,7 +15,8 @@
 	<xacro:macro name="xacro:segment"
 	             params="link_prefix:=^|'' joint_prefix:=^|''
 	                     finger:=^ joint link parent reflect:=^ *origin *axis
-	                     synergy_weight:=None mesh:=1 use_synergy:=^">
+	                     synergy_weight:=None mesh:=1 use_synergy:=^
+	                     scale_factor:=^|1.0">
 		<xacro:property name="props" value="${joint_props[finger][joint]}"/>
 
 
@@ -43,7 +44,7 @@
 							<xacro:property name="mesh" value="${finger}_${link}"/>
 						</xacro:if>
 						<mesh filename="package://human_hand_description/model/meshes/${mesh}.stl"
-						      scale="${0.001*reflect} 0.001 .001"/>
+						      scale="${scale_factor*0.001*reflect} ${scale_factor*0.001} ${scale_factor*0.001}"/>
 					</geometry>
 					<material name="HumanHand/Skin" />
 				</visual>
@@ -75,14 +76,14 @@
 		<!-- MIDDLE PHALANGE -->
 
 		<xacro:segment joint="middle" link="middle" parent="${finger}_proximal_link">
-			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0"/>
+			<origin xyz="0 0 ${proximal_len*scale_factor}" rpy="0 0 0"/>
 			<axis xyz="1 0 0" />
 		</xacro:segment>
 
 		<!-- DISTAL PHALANGE -->
 
 		<xacro:segment joint="distal" link="distal" parent="${finger}_middle_link">
-			<origin xyz="0 0 ${middle_len}" rpy="0 0 0"/>
+			<origin xyz="0 0 ${middle_len*scale_factor}" rpy="0 0 0"/>
 			<axis xyz="1 0 0" />
 		</xacro:segment>
 	</xacro:macro>
@@ -112,14 +113,14 @@
 		<!-- MIDDLE PHALANGE -->
 
 		<xacro:segment joint="middle" link="middle" parent="${finger}_proximal_link">
-			<origin xyz="0 0 ${proximal_len}" rpy="0 0 0"/>
+			<origin xyz="0 0 ${proximal_len*scale_factor}" rpy="0 0 0"/>
 			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
 
 		<!-- DISTAL PHALANGE -->
 
 		<xacro:segment joint="distal" link="distal" parent="${finger}_middle_link">
-			<origin xyz="0 0 ${middle_len}" rpy="0 0 0"/>
+			<origin xyz="0 0 ${middle_len*scale_factor}" rpy="0 0 0"/>
 			<axis xyz="0 ${-1*reflect} 0" />
 		</xacro:segment>
 	</xacro:macro>
@@ -127,11 +128,12 @@
 
 	<!-- HUMAN HAND MODEL -->
 	<xacro:macro name="human_hand"
-	             params="parent link_prefix:=^|'' joint_prefix:=^|''
+	             params="parent link_prefix:=^|'' joint_prefix:=^|'' scale:=1.0
 	                     use_synergy side:='' tactile_mapping:='' tactile_channel:='tactile glove' *origin">
 		<!-- load kinematics properties -->
 		<xacro:property name="properties" value="${load_yaml('../model/properties.yaml')}"/>
 		<xacro:property name="synergies" value="${properties['synergies']}"/>
+		<xacro:property name="scale_factor" value="${scale}"/>
 
 		<!-- load taxel mapping -->
 		<xacro:property name="mapping" value="${None}"/>
@@ -165,7 +167,7 @@
 			<visual>
 				<geometry>
 					<mesh filename="package://human_hand_description/model/meshes/palm.stl"
-					      scale=" ${.001*reflect} .001 .001" />
+					      scale="${scale_factor*0.001*reflect} ${scale_factor*0.001} ${scale_factor*0.001}" />
 				</geometry>
 				<material name="HumanHand/Skin" />
 			</visual>
@@ -191,30 +193,30 @@
 		<!-- THUMB AND FINGERS -->
 
 		<xacro:thumb parent="palm_link" finger="thumb">
-			<origin xyz="${0.02475*reflect} -0.0125 0.0125" rpy="0.0 ${0.6240*reflect} 0"/>
+			<origin xyz="${0.02475*reflect*scale_factor} ${-0.0125*scale_factor} ${0.0125*scale_factor}" rpy="0.0 ${0.6240*reflect} 0"/>
 		</xacro:thumb>
 
 		<xacro:finger parent="palm_link" finger="index">
-			<origin xyz="${0.02175*reflect} -0.002 0.099" rpy="0 0 0"/>
+			<origin xyz="${0.02175*reflect*scale_factor} ${-0.002*scale_factor} ${0.099*scale_factor}" rpy="0 0 0"/>
 		</xacro:finger>
 
 		<xacro:finger parent="palm_link" finger="middle">
-			<origin xyz="${-0.002*reflect} 0.0015 0.0955" rpy="0 0 0"/>
+			<origin xyz="${-0.002*reflect*scale_factor} ${0.0015*scale_factor} ${0.0955*scale_factor}" rpy="0 0 0"/>
 		</xacro:finger>
 
 		<xacro:finger parent="palm_link" finger="ring">
-			<origin xyz="${-0.02225*reflect} 0.0010 0.090" rpy="0 0 0"/>
+			<origin xyz="${-0.02225*reflect*scale_factor} ${0.0010*scale_factor} ${0.090*scale_factor}" rpy="0 0 0"/>
 		</xacro:finger>
 
 		<xacro:finger parent="palm_link" finger="little">
-			<origin xyz="${-0.04175*reflect} -0.003 0.079" rpy="0 0 0"/>
+			<origin xyz="${-0.04175*reflect*scale_factor} ${-0.003*scale_factor} ${0.079*scale_factor}" rpy="0 0 0"/>
 		</xacro:finger>
 
 		<!-- TACTILE MARKERS -->
 
 		<xacro:if value="${mapping is not None}">
 			<xacro:include filename="$(find human_hand_description)/model/tactile_markers.urdf.xacro"/>
-			<xacro:tactile_glove prefix="${link_prefix}" reflect="${reflect}"
+			<xacro:tactile_glove prefix="${link_prefix}" reflect="${reflect}" scale_factor="${scale}"
 			                     tactMap="${mapping}" tactData="${taxel_data}" channel="${tactile_channel}"/>
 		</xacro:if>
 	</xacro:macro>

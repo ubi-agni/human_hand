@@ -7,6 +7,7 @@
 	<xacro:arg name="link_prefix" default="$(arg prefix)"/>
 	<!-- joint_prefix is only needed when combining multiple hands into a single robot -->
 	<xacro:arg name="joint_prefix" default=""/>
+	<xacro:arg name="scale" default="1.0"/>
 	<xacro:arg name="side" default=""/>
 	<xacro:arg name="use_synergy" default="false"/>
 	<xacro:arg name="tactile_mapping" default=""/>
@@ -18,6 +19,7 @@
 	<xacro:property name="side" value="$(arg side)"/>
 	<xacro:human_hand parent="$(arg prefix)glove_base"
 	                  link_prefix="$(arg link_prefix)" joint_prefix="$(arg joint_prefix)"
+	                  scale="$(arg scale)"
 	                  side="$(arg side)" use_synergy="$(arg use_synergy)"
 	                  tactile_mapping="$(arg tactile_mapping)"
 	                  tactile_channel="'$(arg tactile_channel)'">

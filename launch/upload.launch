@@ -9,10 +9,11 @@
 	<arg name="tactile_mapping"/>
 	<arg name="tactile_channel" default="tactile glove"/>
 	<arg name="prefix" default=""/>
+	<arg name="scale" default="1.0"/>
 	<arg name="side" default=""/>
 
 	<!-- load robot description -->
-	<param name="robot_description" command="xacro --inorder --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) side:=$(arg side)"/>
+	<param name="robot_description" command="xacro --inorder --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)"/>
 
 	<group if="$(arg jsp)">
 		<param name="use_gui" value="$(arg gui)"/>
