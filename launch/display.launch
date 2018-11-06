@@ -2,9 +2,14 @@
 <launch>
 	<arg name="calibrated" default="1"/>
 	<arg name="scale" default="1.0"/>
+	<arg name="side" default=""/>
+	<arg name="use_synergy" default="true"/>
+
 	<include file="$(find human_hand_description)/launch/upload.launch">
 		<arg name="tactile_mapping" value="$(arg tactile_mapping)"/>
 		<arg name="scale" value="$(arg scale)"/>
+		<arg name="use_synergy" value="$(arg use_synergy)"/>
+		<arg name="side" value="$(arg side)"/>
 	</include>
 	<node name="$(anon glove_base_transform)" pkg="tf2_ros"
 	      type="static_transform_publisher" args="0 0 0  0 0 0  world glove_base"/>
