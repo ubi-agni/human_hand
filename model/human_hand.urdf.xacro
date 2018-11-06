@@ -15,7 +15,7 @@
 	<xacro:macro name="xacro:segment"
 	             params="link_prefix:=^|'' joint_prefix:=^|''
 	                     finger:=^ joint link parent reflect:=^ *origin *axis
-	                     synergy_weight:=None mesh:=1 use_synergy:=^
+	                     synergy_weight:='None' mesh:=1 use_synergy:=^
 	                     scale_factor:=^|1.0">
 		<xacro:property name="props" value="${joint_props[finger][joint]}"/>
 
@@ -29,7 +29,7 @@
 			       effort="${props['effort']}" velocity="${props['velocity']}"/>
 			<dynamics damping="${props['damping']}" friction="${props['friction']}"/>
 			<xacro:if value="${use_synergy}">
-				<xacro:if value="${synergy_weight is None}">
+				<xacro:if value="${synergy_weight == 'None'}">
 					<xacro:property name="synergy_weight" value="${synergies[finger][joint]}"/>
 				</xacro:if>
 				<mimic joint="${synergy_joint}"
