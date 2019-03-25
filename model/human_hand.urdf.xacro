@@ -15,7 +15,7 @@
 	<xacro:macro name="xacro:segment"
 	             params="link_prefix:=^|'' joint_prefix:=^|''
 	                     finger:=^ joint link parent reflect:=^ *origin *axis
-	                     synergy_weight:=None mesh:=1 use_synergy:=^
+	                     synergy_weight:=${None} mesh:=1 use_synergy:=^
 	                     scale_factor:=^|1.0">
 		<xacro:property name="props" value="${joint_props[finger][joint]}"/>
 
