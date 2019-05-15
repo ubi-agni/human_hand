@@ -131,20 +131,21 @@
 	             params="parent link_prefix:=^|'' joint_prefix:=^|'' scale:=1.0
 	                     use_synergy side:='' tactile_mapping:='' tactile_channel:='tactile glove' *origin">
 		<!-- load kinematics properties -->
-		<xacro:property name="properties" value="${load_yaml('../model/properties.yaml')}"/>
+		<xacro:property name="package" value="$(find human_hand_description)"/>
+		<xacro:property name="properties" value="${load_yaml(package + '/model/properties.yaml')}"/>
 		<xacro:property name="synergies" value="${properties['synergies']}"/>
 		<xacro:property name="scale_factor" value="${scale}"/>
 
 		<!-- load taxel mapping -->
 		<xacro:property name="mapping" value="${None}"/>
 		<xacro:if value="${tactile_mapping not in ['', '-']}">
-			<xacro:property name="mapping" value="${load_yaml('../model/taxel.yaml')[tactile_mapping]}"/>
+			<xacro:property name="mapping" value="${load_yaml(package + '/model/taxel.yaml')[tactile_mapping]}"/>
 			<!-- if side is not yet specified, try to fetch it from the tactile_mapping dictionary -->
 			<xacro:if value="${side not in ['left', 'right']}">
 				<xacro:property name="side" value="${mapping.get('handedness','right')}"/>
 			</xacro:if>
 			<xacro:property name="layout" value="${mapping['layout']}"/>
-			<xacro:property name="taxeldata_file" value="${mapping.get('taxeldata_file','../model/'+layout+side+'.yaml')}"/>
+			<xacro:property name="taxeldata_file" value="${mapping.get('taxeldata_file',package + '/model/'+layout+side+'.yaml')}"/>
 			<!-- load taxeldata dictionary (positions + orientations) of taxel normals from file if available, else None -->
 			<xacro:property name="taxel_data" value="${None}"/>
 			<xacro:if value="${taxeldata_file not in ['', '-']}">
