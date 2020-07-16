@@ -39,67 +39,65 @@ P1:
   tdo: 3
   tmi: 4
   tmo: 5
-
 P2:
   layout: L1
   handedness: right
   taxeldata_file: ""  # L1 has no taxeldata file
-  bar: 14
-  idd: 17
-  idi: 18
-  idm: 29
-  ido: 16
-  imi: 19
-  imm: 28
-  imo: 20
-  ip: 24
-  ipi: 30
-  ldd: 6
-  ldi: 9
-  ldm: 7
-  ldo: 5
-  lmi: 8
-  lmm: 11
-  lmo: 10
-  lp: 12
-  lpo: 13
-  mdd: 39
-  mdi: 42
-  mdm: 44
-  mdo: 40
-  mmi: 37
-  mmm: 43
-  mmo: 38
-  mp: 41
-  pcid: 61
-  pcim: 48
-  pcip: 62
-  pcmd: 49
-  pcmp: 50
-  pdi: 53
-  pdl: 54
-  pdm: 55
-  pdr: 59
-  po: 51
-  ptid: 56
-  ptip: 57
-  ptod: 58
-  ptop: 60
-  rdd: 34
-  rdi: 46
-  rdm: 32
-  rdo: 33
-  rmi: 31
-  rmm: 35
-  rmo: 36
-  rp: 47
-  tdd: 22
-  tdi: 25
-  tdm: 21
-  tdo: 23
-  tmi: 26
-  tmo: 27
-
+  idd: 57
+  idi: 61
+  idm: 62
+  ido: 60
+  imi: 59
+  imm: 50
+  imo: 54
+  ip: 58
+  ipi: 51
+  ldd: 23
+  ldi: 26
+  ldm: 28
+  ldo: 29
+  lmi: 24
+  lmm: 22
+  lmo: 25
+  lp: 27
+  lpo: 30
+  mdd: 40
+  mdi: 43
+  mdm: 45
+  mdo: 41
+  mmi: 38
+  mmm: 44
+  mmo: 39
+  mp: 42
+  pcid: 9
+  pcim: 3
+  pcip: 5
+  pcmd: 14
+  pcmp: 8
+  pdi: 0
+  pdl: 6
+  pdm: 7
+  pdr: 4
+  po: 15
+  ptid: 16
+  ptip: 18
+  ptod: 20
+  ptop: 21
+  rdd: 35
+  rdi: 47
+  rdm: 33
+  rdo: 34
+  rmi: 63
+  rmm: 36
+  rmo: 37
+  rp: 32
+  tdd: 56
+  tdm: 49
+  tdo: 52
+  tdi: 55
+  tmi: 48
+  tmo: 53
+  calibtool: 17
 P3l:
   layout: L2
   handedness: left
@@ -162,7 +160,6 @@ P3l:
   tmi: 2
   tmm: 31
   tmo: 14
-
 P3r:
   layout: L2
   handedness: right
@@ -532,3 +529,65 @@ P5r:
   idm: 23
   idi: 16
   idd: 22
+P6l:
+  layout: L3
+  handedness: left
+  idd: 38
+  idi: 18
+  idm: 10
+  ido: 46
+  imi: 3
+  imm: 27
+  imo: 14
+  ip: 62
+  ipi: 26
+  ldd: 31
+  ldi: 43
+  ldm: 7
+  ldo: 36
+  lmi: 19
+  lmm: 23
+  lmo: 60
+  lp: 39
+  lpo: 56
+  mdd: 59
+  mdi: 22
+  mdm: 50
+  mdo: 11
+  mmi: 63
+  mmm: 2
+  mmo: 55
+  mp: 54
+  pcid: 41
+  pcim: 21
+  pcip: 29
+  pcmd: 0
+  pcmp: 52
+  pdi: 30
+  pdii: 42
+  pdl: 40
+  pdlo: 44
+  pdm: 58
+  pdr: 48
+  ptid: 9
+  ptip: 53
+  ptmd: 17
+  ptmp: 5
+  ptod: 49
+  ptop: 33
+  rdd: 12
+  rdi: 4
+  rdm: 47
+  rdo: 51
+  rmi: 35
+  rmm: 16
+  rmo: 15
+  rp: 8
+  tdd: 61
+  tdi: 13
+  tdm: 45
+  tdo: 6
+  tmi: 25
+  tmm: 57
+  tmo: 34
+  calibtool: 1
