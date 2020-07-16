@@ -27,6 +27,6 @@
 
 	<node name="$(anon glove_rsp)" pkg="robot_state_publisher"
 	      type="robot_state_publisher">
-	      <remap from="/joint_states" to="$(arg in_js)"/>
+	      <remap from="joint_states" to="$(arg in_js)"/>
 	      </node>
 </launch>
