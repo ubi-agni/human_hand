@@ -12,7 +12,7 @@
 	<xacro:include filename="$(find human_hand_description)/model/materials.urdf.xacro"/>
 
 	<!-- a segment is composed of a joint and the attached link -->
-	<xacro:macro name="xacro:segment"
+	<xacro:macro name="segment"
 	             params="link_prefix:=^|'' joint_prefix:=^|''
 	                     finger:=^ joint link parent reflect:=^ *origin *axis
 	                     synergy_weight:=${None} mesh:=1 use_synergy:=^
