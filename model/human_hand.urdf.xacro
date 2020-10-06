@@ -145,6 +145,11 @@
 				<xacro:property name="side" value="${mapping.get('handedness','right')}"/>
 			</xacro:if>
 			<xacro:property name="layout" value="${mapping['layout']}"/>
+			<!-- As we share taxel meshes across all layouts, but L1 doesn't have some taxel indices,
+			     we map L1 taxel indices onto corresponding L2/L3 taxel indices here -->
+			<xacro:if value="${layout == 'L1'}">
+				<xacro:if value="${mapping.update([(k, mapping.get(v,-1)) for k, v in [('tmm', 'tmo'), ('ptmp', 'ptop'), ('ptmd', 'ptod')]])}" />
+			</xacro:if>
 			<xacro:property name="taxeldata_file" value="${mapping.get('taxeldata_file',package + '/model/'+layout+side+'.yaml')}"/>
 			<!-- load taxeldata dictionary (positions + orientations) of taxel normals from file if available, else None -->
 			<xacro:property name="taxel_data" value="${None}"/>

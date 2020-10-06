@@ -67,12 +67,6 @@
 		<sensor name="${prefix}thumb_base" update_rate="100" group="proximal">
 			<parent link="${prefix}thumb_proximal_link"/>
 			<tactile channel="${channel}">
-				<!--pto[p|d] index exists for L2/L3 but is for another taxel -->
-				<xacro:if value="${layout=='L1'}">
-					<xacro:taxel mesh="ptmp2" idx="${tactMap.get('ptop', -1)}"/>
-					<xacro:taxel mesh="ptmd2" idx="${tactMap.get('ptod', -1)}"/>
-				</xacro:if>
-				<!--ptm[p|d] does not exist for L1, so will not be generated except for L2/L3 -->
 				<xacro:taxel mesh="ptmp2" idx="${tactMap.get('ptmp', -1)}"/>
 				<xacro:taxel mesh="ptmd2" idx="${tactMap.get('ptmd', -1)}"/>
 				<xacro:taxel mesh="ptip2" idx="${tactMap.get('ptip', -1)}"/>
@@ -109,13 +103,6 @@
 
 				<xacro:taxel mesh="ptop" idx="${tactMap.get('ptop', -1)}"/>
 				<xacro:taxel mesh="ptod" idx="${tactMap.get('ptod', -1)}"/>
-				<!--pto[p|d] index exists for L2/L3 but is for another taxel.
-				  It is correct they are used twice for L1 to cover the whole surface of the proximal -->
-				<xacro:if value="${layout=='L1'}">
-					<xacro:taxel mesh="ptmp" idx="${tactMap.get('ptop', -1)}"/>
-					<xacro:taxel mesh="ptmd" idx="${tactMap.get('ptod', -1)}"/>
-				</xacro:if>
-				<!--ptm[p|d] does not exist for L1, so will not be generated except for L2/L3 -->
 				<xacro:taxel mesh="ptmp" idx="${tactMap.get('ptmp', -1)}"/>
 				<xacro:taxel mesh="ptmd" idx="${tactMap.get('ptmd', -1)}"/>
 				<xacro:taxel mesh="ptip" idx="${tactMap.get('ptip', -1)}"/>
