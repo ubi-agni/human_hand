@@ -103,10 +103,6 @@
 
 				<xacro:taxel mesh="ptop" idx="${tactMap.get('ptop', -1)}"/>
 				<xacro:taxel mesh="ptod" idx="${tactMap.get('ptod', -1)}"/>
-				<xacro:taxel mesh="ptmp" idx="${tactMap.get('ptmp', -1)}"/>
-				<xacro:taxel mesh="ptmd" idx="${tactMap.get('ptmd', -1)}"/>
-				<xacro:taxel mesh="ptip" idx="${tactMap.get('ptip', -1)}"/>
-				<xacro:taxel mesh="ptid" idx="${tactMap.get('ptid', -1)}"/>
 			</tactile>
 		</sensor>
 	</xacro:macro>
