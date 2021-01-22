@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<package>
+<package format="3">
   <name>human_hand_description</name>
   <version>0.0.1</version>
-  <description>The human_hand_description package</description>
+  <description>A Human hand model as URDF</description>
 
   <maintainer email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</maintainer>
   <license>NO REDISTRIBUTION ACCEPTED</license>
@@ -11,6 +11,11 @@
   <author>Carlos Rosales</author>
 
   <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
 
   <export>
   </export>

@@ -18,14 +18,13 @@
 	<param name="robot_description" unless="$(arg __noetic)" command="xacro --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)" />
 
 	<group if="$(arg jsp)">
-		<param name="use_gui" value="$(arg gui)"/>
-		<node name="$(anon glove_jsp)" pkg="joint_state_publisher"
-		      type="joint_state_publisher" >
+		<arg name="__jsp" value="joint_state_publisher" unless="$(arg gui)"/>
+		<arg name="__jsp" value="joint_state_publisher_gui" if="$(arg gui)" />
+		<node name="$(anon glove_jsp)" pkg="$(arg __jsp)" type="$(arg __jsp)">
 			<!-- listen to synergy/joint_states topic for external synergy joint provider -->
 			<rosparam if="$(arg use_synergy)" param="source_list">["synergy/joint_states"]</rosparam>
 		</node>
 	</group>
 
-	<node name="$(anon glove_rsp)" pkg="robot_state_publisher"
-	      type="robot_state_publisher"/>
+	<node name="$(anon glove_rsp)" pkg="robot_state_publisher" type="robot_state_publisher"/>
 </launch>

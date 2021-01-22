@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.1.3)
 project(human_hand_description)
 
 ## Find catkin macros and libraries
@@ -31,4 +31,4 @@ catkin_package(
 
 foreach(d launch model robots worlds)
   install(DIRECTORY ${d} DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
-endforeach(d)
+endforeach()
