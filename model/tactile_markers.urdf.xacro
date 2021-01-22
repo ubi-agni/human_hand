@@ -5,7 +5,7 @@
 		<xacro:if value="${idx >= 0}">
 			<xacro:if value="${tactData is not None}" >
 				<taxel idx="${idx}"
-				       xyz="${' '.join([str(v) for v in tactData['positions'][mesh]])}"
+				       xyz="${' '.join([str(v*scale_factor) for v in tactData['positions'][mesh]])}"
 				       rpy="${' '.join([str(v) for v in tactData['orientations'][mesh]])}">
 					<geometry>
 						<mesh filename="package://human_hand_description/model/meshes/taxels/${layout}/${mesh}.stl"
