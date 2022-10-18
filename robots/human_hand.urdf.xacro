@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="human_hand">
+	<xacro:arg name="property_file" default="$(find human_hand_description)/model/properties.yaml"/>
+	<xacro:arg name="mapping_file" default="$(find human_hand_description)/model/taxel.yaml"/>
 
 	<!-- side can be left | right | '' | '-' (meaning, fetch from mapping) -->
 	<xacro:arg name="prefix" default=""/> <!-- prefix serves as default for link_prefix -->

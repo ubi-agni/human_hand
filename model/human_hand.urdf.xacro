@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:arg name="property_file" default="$(find human_hand_description)/model/properties.yaml"/>
+	<xacro:arg name="mapping_file" default="$(find human_hand_description)/model/taxel.yaml"/>
 
 	<!--
 	    HUMAN HAND MODEL v 0.1
@@ -132,14 +134,14 @@
 	                     use_synergy side:='' tactile_mapping:='' tactile_channel:='tactile glove' *origin">
 		<!-- load kinematics properties -->
 		<xacro:property name="package" value="$(find human_hand_description)"/>
-		<xacro:property name="properties" value="${xacro.load_yaml(package + '/model/properties.yaml')}" />
+		<xacro:property name="properties" value="${xacro.load_yaml(xacro.arg('property_file'))}" />
 		<xacro:property name="synergies" value="${properties['synergies']}"/>
 		<xacro:property name="scale_factor" value="${scale}"/>
 
 		<!-- load taxel mapping -->
 		<xacro:property name="mapping" value="${None}"/>
 		<xacro:if value="${tactile_mapping not in ['', '-']}">
-			<xacro:property name="mapping" value="${xacro.load_yaml(package + '/model/taxel.yaml')[tactile_mapping]}" />
+			<xacro:property name="mapping" value="${xacro.load_yaml(xacro.arg('mapping_file'))[tactile_mapping]}" />
 			<!-- if side is not yet specified, try to fetch it from the tactile_mapping dictionary -->
 			<xacro:if value="${side not in ['left', 'right']}">
 				<xacro:property name="side" value="${mapping.get('handedness','right')}"/>
