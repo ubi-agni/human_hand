@@ -15,10 +15,12 @@
 	<arg name="scale" default="1.0"/>
 	<arg name="side" default="" doc="handedness: left|right. If empty use handedness from mapping_file or right."/>
 
+	<!-- extra xacro args required for melodic -->
+	<arg name="__noetic" value="$(eval env('ROS_PYTHON_VERSION') == '3')"/>
+	<arg name="__extra_args" value="" if="$(arg __noetic)"/>
+	<arg name="__extra_args" value="--xacro-ns" unless="$(arg __noetic)"/>
 	<!-- load robot description -->
-	<arg name="__noetic" value="$(eval env('ROS_PYTHON_VERSION') == '3')" />
-	<param name="robot_description" if="$(arg __noetic)" command="xacro $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) property_file:=$(arg property_file) mapping_file:=$(arg mapping_file) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)" />
-	<param name="robot_description" unless="$(arg __noetic)" command="xacro --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) property_file:=$(arg property_file) mapping_file:=$(arg mapping_file) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)" />
+	<param name="robot_description" command="xacro $(arg __extra_args) $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) property_file:=$(arg property_file) mapping_file:=$(arg mapping_file) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)"/>
 
 	<group if="$(arg jsp)">
 		<arg name="__jsp" value="joint_state_publisher" unless="$(arg gui)"/>
