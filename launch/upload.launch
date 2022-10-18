@@ -13,7 +13,7 @@
 	<arg name="tactile_channel" default="tactile glove"/>
 	<arg name="prefix" default=""/>
 	<arg name="scale" default="1.0"/>
-	<arg name="side" default=""/>
+	<arg name="side" default="" doc="handedness: left|right. If empty use handedness from mapping_file or right."/>
 
 	<!-- load robot description -->
 	<arg name="__noetic" value="$(eval env('ROS_PYTHON_VERSION') == '3')" />
