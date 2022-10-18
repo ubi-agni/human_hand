@@ -129,17 +129,29 @@
 	<!-- HUMAN HAND MODEL -->
 	<xacro:macro name="human_hand"
 	             params="parent link_prefix:=^|'' joint_prefix:=^|'' scale:=1.0
-	                     use_synergy side:='' tactile_mapping:='' tactile_channel:='tactile glove' *origin">
-		<!-- load kinematics properties -->
+	                     use_synergy side:='' property_file:=^|'' mapping_file:=^|'' tactile_mapping:=''
+	                     tactile_channel:='tactile glove' *origin">
 		<xacro:property name="package" value="$(find human_hand_description)"/>
-		<xacro:property name="properties" value="${xacro.load_yaml(package + '/model/properties.yaml')}" />
+		<!-- load kinematics properties from file if given or from default file -->
+		<xacro:if value="${property_file in ['', '-']}">
+			<xacro:property name="properties" value="${xacro.load_yaml(package + '/model/properties.yaml')}" />
+		</xacro:if>
+		<xacro:unless value="${property_file in ['', '-']}">
+			<xacro:property name="properties" value="${xacro.load_yaml(property_file)}" />
+		</xacro:unless>
+		<!-- load or read other properties -->
 		<xacro:property name="synergies" value="${properties['synergies']}"/>
 		<xacro:property name="scale_factor" value="${scale}"/>
 
-		<!-- load taxel mapping -->
+		<!-- if desired, load taxel mapping from file if given or from default file -->
 		<xacro:property name="mapping" value="${None}"/>
 		<xacro:if value="${tactile_mapping not in ['', '-']}">
-			<xacro:property name="mapping" value="${xacro.load_yaml(package + '/model/taxel.yaml')[tactile_mapping]}" />
+			<xacro:if value="${mapping_file in ['', '-']}">
+				<xacro:property name="mapping" value="${xacro.load_yaml(package + '/model/taxel.yaml')[tactile_mapping]}"/>
+			</xacro:if>
+			<xacro:unless value="${mapping_file in ['', '-']}">
+				<xacro:property name="mapping" value="${xacro.load_yaml(mapping_file)[tactile_mapping]}" />
+			</xacro:unless>
 			<!-- if side is not yet specified, try to fetch it from the tactile_mapping dictionary -->
 			<xacro:if value="${side not in ['left', 'right']}">
 				<xacro:property name="side" value="${mapping.get('handedness','right')}"/>

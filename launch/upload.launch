@@ -7,6 +7,8 @@
 	<!-- use synergy with kinematics-based <mimic> tag -->
 	<arg name="use_synergy" default="true"/>
 	<arg name="tactile_mapping"/>
+	<arg name="mapping_file" default=""/>
+	<arg name="property_file" default=""/>
 	<arg name="tactile_channel" default="tactile glove"/>
 	<arg name="prefix" default=""/>
 	<arg name="scale" default="1.0"/>
@@ -14,8 +16,8 @@
 
 	<!-- load robot description -->
 	<arg name="__noetic" value="$(eval env('ROS_PYTHON_VERSION') == '3')" />
-	<param name="robot_description" if="$(arg __noetic)" command="xacro $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)" />
-	<param name="robot_description" unless="$(arg __noetic)" command="xacro --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)" />
+	<param name="robot_description" if="$(arg __noetic)" command="xacro $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) property_file:=$(arg property_file) mapping_file:=$(arg mapping_file) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)" />
+	<param name="robot_description" unless="$(arg __noetic)" command="xacro --xacro-ns $(find human_hand_description)/robots/human_hand.urdf.xacro use_synergy:=$(arg use_synergy) property_file:=$(arg property_file) mapping_file:=$(arg mapping_file) tactile_mapping:=$(arg tactile_mapping) tactile_channel:='$(arg tactile_channel)' prefix:=$(arg prefix) scale:=$(arg scale) side:=$(arg side)" />
 
 	<group if="$(arg jsp)">
 		<arg name="__jsp" value="joint_state_publisher" unless="$(arg gui)"/>
