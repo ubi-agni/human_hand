@@ -4,10 +4,11 @@
   <version>0.0.1</version>
   <description>A Human hand model as URDF</description>
 
-  <maintainer email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</maintainer>
+  <maintainer email="rhaschke@techfak.uni-bielefeld.de">Robert Haschke</maintainer>
   <license>GPLv2</license>
   
-  <author>Guillaume Walck</author>
+  <author email="rhaschke@techfak.uni-bielefeld.de">Robert Haschke</author>
+  <author email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</author>
   <author>Carlos Rosales</author>
 
   <buildtool_depend>catkin</buildtool_depend>
