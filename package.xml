@@ -5,7 +5,7 @@
   <description>A Human hand model as URDF</description>
 
   <maintainer email="gwalck@techfak.uni-bielefeld.de">Guillaume Walck</maintainer>
-  <license>NO REDISTRIBUTION ACCEPTED</license>
+  <license>GPLv2</license>
   
   <author>Guillaume Walck</author>
   <author>Carlos Rosales</author>
