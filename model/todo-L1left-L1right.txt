@@ -1,0 +1,4 @@
+L1left.yaml and 
+L1right.yaml do both not exist yet (state 20. Nov. 2024) 
+These files are needed to get the TactileContactState arrows point correctly according to taxel center and normal.
+They mustbe generated from a python script in Blender once layout L1 is available there.
