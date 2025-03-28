@@ -1,4 +1,6 @@
 L1left.yaml and 
 L1right.yaml do both not exist yet (state 20. Nov. 2024) 
 These files are needed to get the TactileContactState arrows point correctly according to taxel center and normal.
-They mustbe generated from a python script in Blender once layout L1 is available there.
+They should be generated from a python script in Blender once layout L1 is available there.
+
+Currently L1 is displayed as an L2 without pi. Therefore we re-use the pos/normal of L2 via symlink (2025-03-25)
