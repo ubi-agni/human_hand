@@ -158,6 +158,9 @@
 			<xacro:if value="${taxeldata_file not in ['', '-']}">
 				<xacro:property name="taxel_data" value="${xacro.load_yaml(taxeldata_file)}" />
 			</xacro:if>
+			<xacro:unless value="${taxeldata_file not in ['', '-']}">
+				<notaxeldatafilefound>${package + '/model/'+layout+side+'.yaml'}</notaxeldatafilefound>
+			</xacro:unless>
 		</xacro:if>
 
 		<!-- left/right hand model-->
