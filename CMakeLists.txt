@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.3)
+cmake_minimum_required(VERSION 3.22)
 project(human_hand_description)
 
 ## Find catkin macros and libraries
